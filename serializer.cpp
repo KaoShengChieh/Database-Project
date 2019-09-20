@@ -1,10 +1,6 @@
-#include <cstdio>
-#include <string>
 #include "HotelManager.h"
 
-bool Query::quit() { return type == QUIT; }
-
-Query Query::deserialize(char socketStream[]) {
+Query Serializer::deserializeQuery(char socketStream[]) {
 	Query query;
 	char userName[USERNAMESIZE];
 	char bookID[BOOKIDSIZE];

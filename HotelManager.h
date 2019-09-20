@@ -1,16 +1,16 @@
 #ifndef HOTELMANAGER_H
 #define HOTELMANAGER_H
 
-#define STREAMSIZE ??
-#define USERNAMESIZE 32
-#define BOOKIDSIZE 10
 #include <string>
 #include <vector>
 
+#define STREAMSIZE ??
+#define USERNAMESIZE 32
+#define BOOKIDSIZE 10
+
 enum QueryType {LOGIN, SIGNUP, BOOK, CANCEL, MODIFY, LISTORDER, LISTHOTEL, QUIT};
 
-class Query
-{
+class Query {
 	public:
 		QueryType type;
 		std::string userName;
@@ -21,11 +21,9 @@ class Query
 		int checkout;
 		int price;
 		bool quit();
-		static Query deserialize(char socketStream[]);
 };
 
-class HotelInfo
-{
+class HotelInfo {
 	public:
 		int _hotelID;
 		int _star;
@@ -35,8 +33,7 @@ class HotelInfo
 		HotelInfo(int hotelID, int star, std::string city, std::string address, int price);
 };
 
-class Response
-{
+class Response {
 	public:
 		bool isSuccess;
 		std::string _errorMessage;
@@ -49,6 +46,12 @@ class Response
 		Query getResult();
 		void setOrderList(std::vector<Query> &orderList);
 		void setHotelInfoList(std::vector<HotelInfo> &hotelInfoList);
+};
+
+class Serializer {
+	public:
+		Query deserializeQuery(char socketStream[]);
+		char *serializeResponse(Response &response);
 };
 
 #endif
