@@ -1,16 +1,19 @@
 #include "HotelManager.h"
 
-bool Query::quit() { return type == QUIT; }
-
-HotelInfo::HotelInfo(int hotelID, int star, std::string city, std::string address, int price): _hotelID(hotelID), _star(star), _city(city), _address(address), _price(price) {}
-
-void Response::setErrorMessage(std::string errorMessage) {
-	isSuccess = false;
-	_errorMessage = errorMessage;
+bool Query::quit() {
+	return type == QUIT;
 }
 
-std::string Response::getErrorMessage() {
-	return _errorMessage;
+HotelInfo::HotelInfo(int hotelID, int star, std::string city, std::string address, int price):
+_hotelID(hotelID), _star(star), _city(city), _address(address), _price(price) {}
+
+void Response::setErrMsg(std::string errMsg) {
+	isSuccess = false;
+	_errMsg = errMsg;
+}
+
+std::string Response::getErrMsg() {
+	return _errMsg;
 }
 
 void Response::setResult(Query &result) {

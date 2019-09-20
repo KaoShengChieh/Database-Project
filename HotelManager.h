@@ -4,15 +4,17 @@
 #include <string>
 #include <vector>
 
-#define STREAMSIZE ??
+#define STREAMSIZE 1000000
 #define USERNAMESIZE 32
 #define BOOKIDSIZE 10
+
+char socketStream[STREAMSIZE];
 
 enum QueryType {LOGIN, SIGNUP, BOOK, CANCEL, MODIFY, LISTORDER, LISTHOTEL, QUIT};
 
 class Query {
 	public:
-		QueryType type;
+		int type;
 		std::string userName;
 		std::string bookID;
 		int hotelID;
@@ -36,12 +38,12 @@ class HotelInfo {
 class Response {
 	public:
 		bool isSuccess;
-		std::string _errorMessage;
+		std::string _errMsg;
 		Query _result;
 		std::vector<Query> _orderList;
 		std::vector<HotelInfo> _hotelInfoList;
-		void setErrorMessage(std::string errorMessage);
-		std::string getErrorMessage();
+		void setErrMsg(std::string errMsg);
+		std::string getErrMsg();
 		void setResult(Query &result);
 		Query getResult();
 		void setOrderList(std::vector<Query> &orderList);
