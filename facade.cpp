@@ -1,4 +1,4 @@
-#include "HotelManager.h"
+#include "facade.h"
 
 bool Query::quit() {
 	return type == QUIT;

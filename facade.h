@@ -10,11 +10,11 @@
 
 char socketStream[STREAMSIZE];
 
-enum QueryType {LOGIN, SIGNUP, BOOK, CANCEL, MODIFY, LISTORDER, LISTHOTEL, QUIT};
+typedef enum QueryType {LOGIN, SIGNUP, BOOK, CANCEL, MODIFY, LISTORDER, LISTHOTEL, QUIT} QueryType;
 
 class Query {
 	public:
-		int type;
+		QueryType type;
 		std::string userName;
 		std::string bookID;
 		int hotelID;

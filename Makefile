@@ -1,6 +1,9 @@
-Hotel_Manager: facade.o serializer.o date.o
+Hotel_Manager: hotel_manager.o facade.o serializer.o date.o
 	# donothing for now
 	
+hotel_manager.o: hotel_manager.cpp
+	g++ -c hotel_manager.cpp -Wall
+
 facade.o: facade.cpp
 	g++ -c facade.cpp -Wall
 
@@ -11,4 +14,4 @@ date.o: date.cpp
 	g++ -c date.cpp -Wall
 
 clean:
-	rm -f facade.o serializer.o date.o
+	rm -f hotel_manager.o facade.o serializer.o date.o

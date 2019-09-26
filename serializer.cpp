@@ -1,5 +1,4 @@
-#include <cstdint>
-#include "HotelManager.h"
+#include "facade.h"
 
 extern char socketStream[STREAMSIZE];
 
