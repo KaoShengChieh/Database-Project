@@ -1,3 +1,4 @@
+#include <sstream>
 #include "hotel_manager.h"
 #include "date.h"
 
@@ -11,6 +12,26 @@ HotelManager::~HotelManager() {
 
 Response HotelManager::signUp(Query &query) {
 	Response response;
+	std::string userName;
+	std::string hashedPassword;
+	std::string membership;
+	std::stringstream tokens(query.userName);
+	
+	try {
+		getline(tokens, userName, '/');
+		std::string *transient_password = new std::string;
+		getline(tokens, *transient_password, '/');
+		//hashedPassword = getMD5(transient_password);
+		delete transient_password;
+		getline(tokens, membership, '/');
+	} catch (std::exception e) {
+		response.setErrMsg("Unknown sign up format");
+		return response;
+	}
+	
+	// TODO insert into database table
+	
+	response.isSuccess = true;
 	return response;
 }
 
