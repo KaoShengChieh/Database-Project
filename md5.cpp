@@ -129,7 +129,7 @@ unsigned *generate_md5( const char *msg, int mlen )
     return h;
 }
 
-std::string msg_digest(std::string msg)
+std::string msg_digest(std::string &msg)
 {
 	Md5 md5;
 	unsigned *d = generate_md5(msg.c_str(), msg.length());

@@ -1,6 +1,7 @@
 #include <sstream>
 #include "hotel_manager.h"
 #include "date.h"
+#include "msg_digest.h"
 
 HotelManager::HotelManager() {
 
@@ -21,7 +22,7 @@ Response HotelManager::signUp(Query &query) {
 		getline(tokens, userName, '/');
 		std::string *transient_password = new std::string;
 		getline(tokens, *transient_password, '/');
-		//hashedPassword = getMD5(transient_password);
+		hashedPassword = msg_digest(*transient_password);
 		delete transient_password;
 		getline(tokens, membership, '/');
 	} catch (std::exception e) {
