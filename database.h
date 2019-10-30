@@ -3,10 +3,7 @@
 
 class Database
 {
-
-
-
-
+	// TODO Depends on your design 
 };
 
 #endif

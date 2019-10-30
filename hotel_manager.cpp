@@ -3,8 +3,10 @@
 #include "date.h"
 #include "msg_digest.h"
 
-HotelManager::HotelManager() {
+extern pthread_mutex_t book_mutex;	
 
+HotelManager::HotelManager() {
+	system("java -cp .:./lib/sqlite-jdbc-3.23.1.jar:./lib/json-simple-1.1.1.jar HotelDataParser ./data/ hotel.json");
 }
 
 HotelManager::~HotelManager() {
@@ -87,3 +89,6 @@ void HotelManager::Service::doService(Customer &customer, Query &query, Response
 			throw new CustomerActionFailException("Unknown query");
 	}
 }
+
+
+void HotelManager::connectDBs() {}; //TODO
