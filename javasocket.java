@@ -6,13 +6,13 @@ public class javasocket {
         String adrress = "127.0.0.1";
         Socket socket = new Socket(adrress, 5000);
         OutputStreamWriter streamWriter = new OutputStreamWriter(socket.getOutputStream());
-        streamWriter.write("HELLO TO SERVER FROM CLIENT");
-        streamWriter.write("哈哈");
-        streamWriter.flush();
         
         InputStreamReader streamReader = new InputStreamReader(socket.getInputStream());
         BufferedReader bufferReader = new BufferedReader(streamReader);
-
+        
+        streamWriter.write("PING");
+        streamWriter.flush();
+        
         String MESSAGE = bufferReader.readLine();
         System.out.println(MESSAGE + "java");
     }
