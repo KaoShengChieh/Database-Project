@@ -1,20 +1,38 @@
-Hotel_Manager: hotel_manager.o facade.o serializer.o date.o md5.o
-	# donothing for now
+TARGET = Hotel_Manager HotelDataParser.class
+OBJECT = hotel_manager.o visitor.o facade.o serializer.o date.o md5.o
+CC = g++ -Wall
+JCC = javac -cp
+LIB = ./lib/
+SQLITE_DRIVER = sqlite-jdbc-3.23.1.jar
+JSON_PARSER = json-simple-1.1.1.jar
+MATH = -lm
+
+All: $(TARGET)
+
+Hotel_Manager: $(OBJECT)
+	# do nothing for now
 	
 hotel_manager.o: hotel_manager.cpp
-	g++ -c hotel_manager.cpp -Wall
+	$(CC) -c hotel_manager.cpp
+
+visitor.o: visitor.cpp
+	$(CC) -c visitor.cpp
 
 facade.o: facade.cpp
-	g++ -c facade.cpp -Wall
+	$(CC) -c facade.cpp
 
 serializer.o: serializer.cpp
-	g++ -c serializer.cpp -Wall
+	$(CC) -c serializer.cpp
 	
 date.o: date.cpp
-	g++ -c date.cpp -Wall
+	$(CC) -c date.cpp
 
 md5.o: md5.cpp
-	g++ -c md5.cpp -Wall
+	$(CC) -c md5.cpp $(MATH)
+	
+HotelDataParser.class:
+	$(JCC) .:$(LIB)$(SQLITE_DRIVER):$(LIB)$(JSON_PARSER) HotelDataParser.java
 
 clean:
-	rm -f hotel_manager.o facade.o serializer.o date.o md5.o
+	rm -f $(OBJECT)
+	
