@@ -1,8 +1,12 @@
 #ifndef HOTEL_MANAGER_H
 #define HOTEL_MANAGER_H
 
+#include <pthread.h>
 #include "database.h"
 #include "facade.h"
+
+pthread_mutex_t encypt_mutex = PTHREAD_MUTEX_INITIALIZER;
+pthread_mutex_t book_mutex = PTHREAD_MUTEX_INITIALIZER;
 
 class HotelManager
 {
@@ -80,16 +84,5 @@ class HotelManager
 				Visitor *visitor = new VisitorImpl();
 		};	
 };
-
-HotelManager::CustomerActionFailException::CustomerActionFailException(std::string msg): errMsg(msg) {}
-HotelManager::CustomerActionFailException::~CustomerActionFailException() throw () {}
-const char *HotelManager::CustomerActionFailException::what() const throw() { return errMsg.c_str(); }
-void HotelManager::Member::doMember() { isMember = true; }
-void HotelManager::Member::accept(Visitor *visitor) { visitor->visit(this); }
-void HotelManager::VIP::doVIP() { isMember = isVIP = true; }
-void HotelManager::VIP::accept(Visitor *visitor) { visitor->visit(this); }
-void HotelManager::VisitorImpl::visit(Member *member) { member->doMember(); }
-void HotelManager::VisitorImpl::visit(VIP *vip) { vip->doVIP(); }
-void HotelManager::connectDBs() {}; //TODO
 
 #endif
