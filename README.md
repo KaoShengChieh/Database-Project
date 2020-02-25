@@ -1,22 +1,34 @@
 Online Hotel Booking System
 ===
-[TOC]
 
-Outline
-A. Member
-B. Project Description
-C. Database Requirements
-D. Functional Requirements
-E. Database Design with ER-Diagram - Third-Party Payment Platform 
-F. Database Schema – Distributed Database System
-G. System Architecture – Numerous Clients Online
-H. Implement Philosophy – Design Pattern and Extension
-I. Package Hierarchy
-J. Platform/Tool/Protocol
+<center>
+  <table>
+    <tr>
+      <td>Outline</td>
+    </tr>
+    <tr>
+      <td align="left">
+        A. Member<br>
+        B. Project Description<br>
+        C. Database Requirements<br>
+        D. Functional Requirements<br>
+        E. Database Design with ER-Diagram - Third-Party Payment Platform<br>
+        F. Database Schema – Distributed Database System<br>
+        G. System Architecture – Numerous Clients Online<br>
+        H. Implement Philosophy – Design Pattern and Extension<br>
+        I. Package Hierarchy<br>
+        J. Platform/Tool/Protocol
+      </td>
+    </tr>
+  </table>
+</center>
 
-|                                                                                                                                                                             Outline                                                                                                                                                                             |
-|:---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|
-| A. Member<br>B. Project Description<br>C. Database Requirements<br>D. Functional Requirements<br>E. Database Design with ER-Diagram - Third-Party Payment Platform<br>F. Database Schema – Distributed Database System<br>G. System Architecture – Numerous Clients Online<br>H. Implement Philosophy – Design Pattern and Extension<br>I. Package Hierarchy<br>J. Platform/Tool/Protocol |
+
+| Outline                                                                                                                                                                                                                                                                                                                                                          |
+|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|
+|A. Member<br>B. Project Description<br>C. Database Requirements<br>D. Functional Requirements<br>E. Database Design with ER-Diagram - Third-Party Payment Platform<br>F. Database Schema – Distributed Database System<br>G. System Architecture – Numerous Clients Online<br>H. Implement Philosophy – Design Pattern and Extension<br>I. Package Hierarchy<br>J. Platform/Tool/Protocol |
+
+
 
 ## Project Description
 1. This system is an online hotel booking system composed of "numerous client applications" and "single management system server". This would be introduced later in “G. System Architecture – Numerous Clients Online”.
@@ -131,7 +143,7 @@ A member uses our payment service with a credit card of certain bank. Our platfo
 This system allows a guest (non-member visitor) find eligible hotels with customized enquiry. A registered member can furthermore exploit it to book the hotel they want, based on the results of the previous inquiry. The system also allows a member reach the details of his/her order, then provide advanced function regarding his/her membership (for example, general member can cancel the order, and VIP can modify the order). In addition, the system also provides various features such as sorting. Users can sort the results according to their needs. For example, they can sort the result of available hotels by either star, price or location. Most importantly, GUI (graph user interface) can maintain highly interactive even when hundreds of people are enjoying our application simultaneously.
 
 ## Implement Philosophy – Design Pattern and Extension
-<table style=>
+<table>
   <tr>
     <td>功能：多人連線系統、搶票</td>
     <td>設計：Guarded Suspension</td>
