@@ -43,7 +43,7 @@ Members can login to the platform by the unique user name.
 ### List hotel
 Member can search hotels for the specific city, room type, expected check-in and check-out dates, and hotel star.
 
-<img src="https://i.imgur.com/FRmDzCN.png" width="500">
+<img src="https://i.imgur.com/P4xLDDx.png" width="500">
 
 <img src="https://i.imgur.com/3EEObYv.png" width="500">
 
@@ -64,7 +64,7 @@ VIP member can modify his/her own previous reservation before paying the fees.
 ### Cancel
 Member can cancel the reservation before paying the fees.
 
-<img src="https://i.imgur.com/1CPmAYW.png" width="500">
+<img src="https://i.imgur.com/H1Elzka.png" width="500">
 
 ### List reservation
 Member can view unpaid reservations they have made before expiration.
@@ -169,7 +169,7 @@ In below shows an example that a member opens two windows to make an reservation
     <td>設計：Visitor</td>
   </tr>
   <tr>
-    <td colspan="2">情境：系統中有訪客、會員與VIP。經過設計考量，讓訪客只能查詢，會員可以進一步訂房和取消訂單，VIP可以再有修改訂單和退款的特殊服務。<br><img src="https://i.imgur.com/0mThiso.png" width="400"></td>
+    <td colspan="2">情境：系統中有訪客、會員與VIP。經過設計考量，讓訪客只能查詢，會員可以進一步訂房和取消訂單，VIP可以再有修改訂單和退款的特殊服務。<br><img src="https://i.imgur.com/0mThiso.png" width="500"></td>
   </tr>
 </table>
 
@@ -209,7 +209,7 @@ In below shows an example that a member opens two windows to make an reservation
     <td>設計：Strategy</td>
   </tr>
   <tr>
-    <td colspan="2">情境：訂房網站實際連線之後Manager所提供的服務，Server並不用知曉。將服務與實作封裝為一個個Strategy物件，讓使用服務的客戶端可以依需求抽換服務或演算法，而不用關心服務使用的演算法或實作方式。<br><img src="https://i.imgur.com/EdIkCy2.png" width="400"></td>
+    <td colspan="2">情境：訂房網站實際連線之後Manager所提供的服務，Server並不用知曉。將服務與實作封裝為一個個Strategy物件，讓使用服務的客戶端可以依需求抽換服務或演算法，而不用關心服務使用的演算法或實作方式。<br><img src="https://i.imgur.com/EdIkCy2.png" width="500"></td>
   </tr>
 </table>
 
