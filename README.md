@@ -5,16 +5,15 @@ Online Hotel Booking System
 - [How to Run Server & Clients](#how-to-run-server--clients)
 - [User & Operator Guide](#user--operator-guide)
 - [Database Design with ER-Diagram – Third-Party Payment Platform](#database-design-with-er-Diagram--third-party-payment-platform)
-- [Database Schema – Distributed Database System](#database-schema--distributed-database-system)
+- [Database Schema – Distributed Databases](#database-schema--distributed-databases)
 - [System Architecture – Numerous Clients Online](#system-architecture--numerous-clients-online)
 - [Platform / Tool / Protocol](#platform--tool--protocol)
 - [Appendix](#appendix)
   - [Implement Philosophy – Design Pattern and Extension (Chinese)](#implement-philosophy--design-pattern-and-extension-chinese)
 
 ## Project Description
-1. This system is an online hotel booking system composed of "numerous client applications" and "single management system server". This would be introduced later in “F. System Architecture – Numerous Clients Online”.
-2. The online hotel booking system is constructed as a third-party payment platform. This would be introduced later in “D. Database Design with ER-Diagram - Third-party Payment Platform”.
-3. The third-party payment platform is built as distributed database systems. This would be introduced later in “E. Database Schema – Distributed Database System”.
+
+This project is an online hotel booking system composed of "numerous client applications" and "single management system server". The system is constructed as a third-party payment platform and the platform is built as distributed databases.
 
 ## How to Run Server & Clients
 
@@ -102,34 +101,36 @@ The hotel account may be credited in minutes or days, but the funds may be withd
 
 ![](https://i.imgur.com/2nbxoUP.png)
 
-The figure shown above is the ER-diagram of the distributed database systems, which will be introduced later in “F. Database Schema – Distributed Database System”. Knowing that my ER-diagram is somewhat intricate, I give an abstract as follows. Suppose the entity “hotel manager” is the origin, the diagram can be roughly divided into four parts, which are:
+The figure shown above is the ER-diagram of the distributed databases, which will be introduced later in [Database Schema – Distributed Databases](#database-schema--distributed-databases). Knowing that my ER-diagram is somewhat intricate, I give an abstract as follows. Suppose the entity “Hotel Manager” is the origin, the diagram can be roughly divided into four parts, which are:
 1. First quadrant: **Hotel System**
 It is composed of thousands of hotels and millions of room reservations, which are primary merchandise in the system.
 2. Second quadrant and periphery: **Cashing System**
-It involves monetary system and payment flow (or flow of money in plain words). The monetary system has been well elaborated in last paragraph, so I merely describe the payment flow beneath it here. The payment flow consists of the payer (e.g. member in the trade transaction) and the payer's bank plus the payee (e.g. hotel) and the payee's bank. The banking system and its interbank payment transfer systems provide the primary infrastructure for fund transfers between customers. But hotel manager grips the sluices of payment flow.
+It involves monetary system and payment flow (or flow of money in plain words). The monetary system has been well elaborated in last paragraph, so here I merely describe the payment flow beneath it here. The payment flow consists of the payer (e.g. member in the trade transaction) and the payer's bank plus the payee (e.g. hotel) and the payee's bank. The banking system and its interbank payment transfer systems provide the primary infrastructure for fund transfers between customers. But hotel manager grips the sluices of payment flow.
 3. Third quadrant: **Client Application**
-This would be introduced later in “F. System Architecture – Numerous Clients Online”.
+This would be introduced later in [System Architecture – Numerous Clients Online](#system-architecture--numerous-clients-online).
 4. Fourth quadrant: **Advertisement System**
 Application would have some pop-up advertisements if the visitor is not qualified as a VIP. Advertiser can send their commercial to hotel manager. The latter will charge the former regarding the content.
 
-Since the attributes in the system are too many to present in the ER diagram, I show them in the following topic “E. Database Schema – Distributed Database System”.
+Since the attributes in the system are too many to present in the ER diagram, I show them in the following topic [Database Schema – Distributed Databases](#database-schema--distributed-databases).
 
-## Database Schema – Distributed Database System
+## Database Schema – Distributed Databases
 
 To make it more comprehensible, consider one transaction example:
-A member uses payment service with a credit card of certain bank. Then, the platform requests the bank to start going over the verification. If everything goes well, the platform forwards the fund and order information to the hotel. Finally, the hotel offers reservation.
+A member uses payment service with a credit card of certain bank. Then, the platform requests the bank start going over the verification. If everything goes well, the platform forwards the fund and order information to the hotel. Finally, the hotel offers reservation.
 
 ![](https://i.imgur.com/oN1QoQU.png)
 ![](https://i.imgur.com/oYedxDG.png)
 ![](https://i.imgur.com/eHrxQV5.png)
 
-## F. System Architecture – Numerous Clients Online
+## System Architecture – Numerous Clients Online
 
 <img src="https://i.imgur.com/Qw1LxK4.png" width="600">
 
-This system allows a guest (non-member visitor) find eligible hotels with customized enquiry. A registered member can furthermore exploit it to book the hotel they want, based on the results of the previous inquiry. The system also allows a member reach the details of his/her order, then provide advanced function regarding his/her membership (for example, general member can cancel the order, and VIP can modify the order). In addition, the system also provides various features such as sorting by hotel star, price or location. Users can customize the results according to their needs. Most importantly, GUI (graph user interface) can maintain highly interactive even when hundreds of people are enjoying the application simultaneously.
+This system allows a guest (non-member visitor) find eligible hotels with customized enquiry. A registered member can furthermore exploit it to book the hotel he/she want and reach the details of his/her order. Regarding his/her membership, the system provides member diverse functions (for example, general member can cancel the order, and VIP can modify the order). 
 
-In below shows an example that a member opens two windows to make an reservation. One would be update automatically if the other has a new order.
+In addition, there are various features such as sorting their searching by hotel star, price or location. Users can customize the results according to their needs. Most importantly, GUI (graph user interface) can maintain highly interactive even when hundreds of people are enjoying the application simultaneously.
+
+In below shows an example that a member opens two windows to make an reservation. If one makes a new reservation, the other will be updated automatically.
 
 ![](https://i.imgur.com/flf5vPR.jpg)
 ![](https://i.imgur.com/iwREQ2m.png)
@@ -235,7 +236,7 @@ In below shows an example that a member opens two windows to make an reservation
     <td>設計：Observer</td>
   </tr>
   <tr>
-    <td colspan="2">情境：我強化上一頁提到的Producer Consumer模式，將紀錄current user的list視為Observer模式中的主題（subject），針對每個連到Server的Client建立觀察者（observer）。主題會被多個觀察者訂閱，當主題的狀態發生變化時，它必須通知（notify）所有訂閱它的觀察者，觀察者會檢視主題的狀態變化，並作出對應的動作，而本設計實際上是為了下一個設計鋪路。</td>
+    <td colspan="2">情境：強化上一頁提到的Producer Consumer模式，將紀錄current user的list視為Observer模式中的主題（subject），針對每個連到Server的Client建立觀察者（observer）。主題會被多個觀察者訂閱，當主題的狀態發生變化時，它必須通知（notify）所有訂閱它的觀察者，觀察者會檢視主題的狀態變化，並作出對應的動作，而本設計實際上是為了下一個設計鋪路。</td>
   </tr>
 </table>
 
@@ -245,7 +246,7 @@ In below shows an example that a member opens two windows to make an reservation
     <td>設計：Model-View-Controller</td>
   </tr>
   <tr>
-    <td colspan="2">情境：系統除了支援多人在線進行操作，還進一步讓一名使用者可以使用多台裝置登入，再次提升了搶票的多元性及強度。我使用MVC model解決帳號資訊的同步問題。假如兩台裝置A、B登入同一帳號，使用裝置A訂房後，裝置B的Reservation list要顯示裝置A加入的那筆訂單；同樣的，使用裝置A繳款後，裝置B無須點選重新整理，Order list就要立即加入已經繳款完成的訂單。而這個model的完成是得力於前兩個設計的幫助，「F. System Architecture – Numerous Clients Online」中最後的例子正展示了這個設計。</td>
+    <td colspan="2">情境：系統除了支援多人在線進行操作，還進一步讓一名使用者可以使用多台裝置登入，再次提升了搶票的多元性及強度，來解決帳號資訊的同步問題。假如兩台裝置A、B登入同一帳號，使用裝置A訂房後，裝置B的Reservation list要顯示裝置A加入的那筆訂單；同樣的，使用裝置A繳款後，裝置B無須點選重新整理，Order list就要立即加入已經繳款完成的訂單。而這個model的完成是得力於前兩個設計的幫助，<a href="#system-architecture--numerous-clients-online">System Architecture – Numerous Clients Online</a>中最後的例子正展示了這個設計。</td>
   </tr>
 </table>
 
@@ -295,10 +296,7 @@ In below shows an example that a member opens two windows to make an reservation
     <td>擴充：Cryptographic Hash Function</td>
   </tr>
   <tr>
-    <td colspan="2">情境：考慮以下兩點<br>
-1.	網路封包可能被攔截<br>
-2.	訂房網站系統可能有內鬼<br>
-我針對訂房系統中的部分資料(如：使用者密碼)進行加密，假使訊息被攔截，客戶的機密資訊也不會流出。並且在訂房系統內部也做特殊處理，就算是操作訂房網站系統的內部人員，甚至任何可以看到private變數的開發人員，也無法看到真實的內容。</td>
+    <td colspan="2">情境：考慮網路封包可能被攔截，針對訂房系統中的部分資料(如：使用者密碼)進行加密，即使訊息被攔截，客戶的機密資訊也不會流出。系統內部也做特殊處理，即使是操作訂房系統的內部人員或甚至是任何可以存取private變數的開發人員，也無法看見資料真實的內容。</td>
   </tr>
 </table>
 
