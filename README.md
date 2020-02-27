@@ -3,20 +3,20 @@ Online Hotel Booking System
 
 - [Project Description](#project-description)
 - [How to Run Server & Clients](#how-to-run-server--clients)
-- [User & Operator Guide](user--operator-guide)
-- [Database Design with ER-Diagram – Third-Party Payment Platform](database-design-with-er--Diagram--third--party-payment-platform)
-- [Database Schema – Distributed Database System]
-- [System Architecture – Numerous Clients Online]
-- [Platform/Tool/Protocol]
-- [Appendix]
-  - [Implement Philosophy – Design Pattern and Extension (Chinese)]
+- [User & Operator Guide](#user--operator-guide)
+- [Database Design with ER-Diagram – Third-Party Payment Platform](#database-design-with-er-Diagram--third-party-payment-platform)
+- [Database Schema – Distributed Database System](#database-schema--distributed-database system)
+- [System Architecture – Numerous Clients Online](#system-architecture--numerous-clients-online)
+- [Platform/Tool/Protocol](#platform-tool-protocol)
+- [Appendix](#appendix)
+  - [Implement Philosophy – Design Pattern and Extension (Chinese)](#implement-philosophy--design-pattern-and-extension-chinese)
 
 ## Project Description
 1. This system is an online hotel booking system composed of "numerous client applications" and "single management system server". This would be introduced later in “F. System Architecture – Numerous Clients Online”.
 2. The online hotel booking system is constructed as a third-party payment platform. This would be introduced later in “D. Database Design with ER-Diagram - Third-party Payment Platform”.
 3. The third-party payment platform is built as distributed database systems. This would be introduced later in “E. Database Schema – Distributed Database System”.
 
-## B. How to Run Server & Clients
+## How to Run Server & Clients
 
 1. Install [Java SE Development Kit 11](https://www.oracle.com/technetwork/java/javase/downloads/jdk11-downloads-5066655.html)
 2. For Server side, execute the command below:
@@ -32,7 +32,7 @@ $ ./compile.sh
 $ ./run.sh
 ```
 
-## C. User & Operator Guide
+## User & Operator Guide
 
 <img src="https://i.imgur.com/hnFoOcV.jpg" width="500">
 
@@ -92,7 +92,7 @@ Hotel Manager would sometimes play advertisements on the platform. VIP member is
 
 <img src="https://i.imgur.com/9KKwVjt.jpg" width="500">
 
-## D. Database Design with ER-Diagram – Third-party Payment Platform
+## Database Design with ER-Diagram – Third-party Payment Platform
 
 The online hotel booking system is constructed as a third-party payment platform.
 
@@ -114,7 +114,7 @@ Application would have some pop-up advertisements if the visitor is not qualifie
 
 Since the attributes in the system are too many to present in the ER diagram, I show them in the following topic “E. Database Schema – Distributed Database System”.
 
-## E. Database Schema – Distributed Database System
+## Database Schema – Distributed Database System
 
 To make it more comprehensible, consider one transaction example:
 A member uses payment service with a credit card of certain bank. Then, the platform requests the bank to start going over the verification. If everything goes well, the platform forwards the fund and order information to the hotel. Finally, the hotel offers reservation.
@@ -135,7 +135,7 @@ In below shows an example that a member opens two windows to make an reservation
 ![](https://i.imgur.com/iwREQ2m.png)
 ![](https://i.imgur.com/k84LWnM.png)
 
-## G. Platform/Tool/Protocol
+## Platform/Tool/Protocol
 * **Developing language**: Java SE 11.0.5
 * **Graph User Interface**: Java Swing, Java AWT. Eclipse, Window Builder
 * **Data encryption**: MD5
