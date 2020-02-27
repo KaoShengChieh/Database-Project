@@ -5,9 +5,9 @@ Online Hotel Booking System
 - [How to Run Server & Clients](#how-to-run-server--clients)
 - [User & Operator Guide](#user--operator-guide)
 - [Database Design with ER-Diagram – Third-Party Payment Platform](#database-design-with-er-Diagram--third-party-payment-platform)
-- [Database Schema – Distributed Database System](#database-schema--distributed-database system)
+- [Database Schema – Distributed Database System](#database-schema--distributed-database-system)
 - [System Architecture – Numerous Clients Online](#system-architecture--numerous-clients-online)
-- [Platform/Tool/Protocol](#platform-tool-protocol)
+- [Platform / Tool / Protocol](#platform--tool--protocol)
 - [Appendix](#appendix)
   - [Implement Philosophy – Design Pattern and Extension (Chinese)](#implement-philosophy--design-pattern-and-extension-chinese)
 
@@ -135,7 +135,7 @@ In below shows an example that a member opens two windows to make an reservation
 ![](https://i.imgur.com/iwREQ2m.png)
 ![](https://i.imgur.com/k84LWnM.png)
 
-## Platform/Tool/Protocol
+## Platform / Tool / Protocol
 * **Developing language**: Java SE 11.0.5
 * **Graph User Interface**: Java Swing, Java AWT. Eclipse, Window Builder
 * **Data encryption**: MD5
