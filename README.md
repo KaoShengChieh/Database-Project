@@ -1,11 +1,17 @@
 Online Hotel Booking System
 ===
 
-| Outline |
-| ----------- |
-| **A**. Project Description<br>**B**. How to Run Server & Clients<br>**C**. User & Operator Guide<br>**D**. Database Design with ER-Diagram – Third-Party Payment Platform<br>**E**. Database Schema – Distributed Database System<br>**F**. System Architecture – Numerous Clients Online<br>**G**. Platform/Tool/Protocol<br>**Appendix**<br>&emsp;&nbsp;Implement Philosophy – Design Pattern and Extension (Chinese) |
+- [Project Description](#project-description)
+- [How to Run Server & Clients](#how-to-run-server--clients)
+- [User & Operator Guide](user--operator-guide)
+- [Database Design with ER-Diagram – Third-Party Payment Platform](database-design-with-er--Diagram--third--party-payment-platform)
+- [Database Schema – Distributed Database System]
+- [System Architecture – Numerous Clients Online]
+- [Platform/Tool/Protocol]
+- [Appendix]
+  - [Implement Philosophy – Design Pattern and Extension (Chinese)]
 
-## A. Project Description
+## Project Description
 1. This system is an online hotel booking system composed of "numerous client applications" and "single management system server". This would be introduced later in “F. System Architecture – Numerous Clients Online”.
 2. The online hotel booking system is constructed as a third-party payment platform. This would be introduced later in “D. Database Design with ER-Diagram - Third-party Payment Platform”.
 3. The third-party payment platform is built as distributed database systems. This would be introduced later in “E. Database Schema – Distributed Database System”.
