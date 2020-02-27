@@ -86,8 +86,8 @@ Member can pay for the reservation by submitting the fees to the cash system wit
 
 ![](https://i.imgur.com/ewfZnxE.png)
 
-### Play advertisement
-Hotel Manager would sometimes play advertisements on the platform. VIP member is immune to this.
+### AD pop-up
+Application would sometimes play advertisements. VIP member is immune to this.
 
 <img src="https://i.imgur.com/9KKwVjt.jpg" width="500">
 
@@ -276,7 +276,7 @@ In below shows an example that a member opens two windows to make an reservation
     <td>設計：Reuse</td>
   </tr>
   <tr>
-    <td colspan="2">情境：如上一個Façade設計所敘述，我透過事前分析，述明要傳送的資料內容後，再將Server端和Client端的接口建立好，如此一來，Server端和Client端就可以分開開發了。在Jacobson的六個reuse階段中，這個系統在Black-box reuse的階段，因為開發人員彼此之間可以互相信任，進而重複利用彼此的程式碼以節省開發時間。</td>
+    <td colspan="2">情境：如前一個Façade設計所提及，透過事前分析，述明要傳送的資料內容後，再將Server端和Client端的接口建立好，如此一來，Server端和Client端就可以分開開發了。在Jacobson的六個reuse階段中，這個系統在Black-box reuse的階段，因為開發人員彼此之間可以互相信任，進而重複利用彼此的程式碼以節省開發時間。</td>
   </tr>
 </table>
 
@@ -286,7 +286,7 @@ In below shows an example that a member opens two windows to make an reservation
     <td>設計：Modularization</td>
   </tr>
   <tr>
-    <td colspan="2">情境：每個GUI頁面都有一個的class封裝好相關的頁面屬性和互動函式，而頁面和頁面間的切換是在ParentFrame進行，未來如果要加入新的頁面，會最小程度的影響舊有系統的運行。<br><img src="https://i.imgur.com/VXs4qXK.png"></td>
+    <td colspan="2">情境：每個GUI頁面都有一個的class封裝好相關的頁面屬性和互動函式，而頁面和頁面間的切換是在ParentFrame進行，未來如果要加入新的頁面，會最小程度的影響舊有系統的運行。<br><img src="https://i.imgur.com/NyKIl2l.png"></td>
   </tr>
 </table>
 
@@ -306,7 +306,7 @@ In below shows an example that a member opens two windows to make an reservation
     <td>擴充：Dialogue</td>
   </tr>
   <tr>
-    <td colspan="2">情境：除非此Dialogue已關閉，否則Dialogue跳出時無法點擊到後方畫面。如果使用者在錯誤訊息跳出時，不慎點擊後方畫面，系統所給予的資訊可能就此忽略，抑或是廣告跳出時，使用者可藉由此方式跳開廣告的視窗，進而略過廣告，因此，我將跳出的視窗使用Dialogue呈現，來限制使用者的操作行為。</td>
+    <td colspan="2">情境：透過將跳出的視窗使用Dialogue呈現，來限制使用者的操作行為。如果使用者在錯誤訊息跳出時，不慎點擊後方畫面，系統所給予的資訊可能就此忽略：抑或是廣告跳出時，使用者可藉由此方式跳開廣告的視窗，進而略過廣告。而Dialogue跳出時無法點擊後方畫面，除非將此Dialogue關閉。</td>
   </tr>
 </table>
 
