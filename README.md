@@ -1,7 +1,13 @@
 Online Hotel Booking System
 ===
 
-- [Project Description](#project-description)
+## What is it?
+
+This project is an online hotel booking system composed of single management system server and numerous client applications. The system is constructed as a third-party payment platform and the platform is built as distributed databases.
+
+## Table of Contents
+
+- [What is it?](#what-is-it)
 - [How to Run Server & Clients](#how-to-run-server--clients)
 - [User & Operator Guide](#user--operator-guide)
 - [Database Design with ER-Diagram – Third-Party Payment Platform](#database-design-with-er-Diagram--third-party-payment-platform)
@@ -10,10 +16,6 @@ Online Hotel Booking System
 - [Platform / Tool / Protocol](#platform--tool--protocol)
 - [Appendix](#appendix)
   - [Implement Philosophy – Design Pattern and Extension (Chinese)](#implement-philosophy--design-pattern-and-extension-chinese)
-
-## Project Description
-
-This project is an online hotel booking system composed of "numerous client applications" and "single management system server". The system is constructed as a third-party payment platform and the platform is built as distributed databases.
 
 ## How to Run Server & Clients
 
@@ -84,7 +86,7 @@ Member can view orders they have paid.
 ### Pay
 Member can pay for the reservation by submitting the fees to the cash system with credit card.
 
-![](https://i.imgur.com/ewfZnxE.png)
+![](https://i.imgur.com/fLX3umW.png)
 
 ### AD pop-up
 Application would sometimes play advertisements. VIP member is immune to this.
@@ -130,7 +132,7 @@ This system allows a guest (non-member visitor) find eligible hotels with custom
 
 In addition, there are various features such as sorting their searching by hotel star, price or location. Users can customize the results according to their needs. Most importantly, GUI (graph user interface) can maintain highly interactive even when hundreds of people are enjoying the application simultaneously.
 
-In below shows an example that a member opens two windows to make an reservation. If one makes a new reservation, the other will be updated automatically.
+In below shows an example that a member opens two windows to make a reservation. If one makes a new reservation, the other will be updated automatically.
 
 ![](https://i.imgur.com/flf5vPR.jpg)
 ![](https://i.imgur.com/iwREQ2m.png)
@@ -222,7 +224,7 @@ In below shows an example that a member opens two windows to make an reservation
 
 <table>
   <tr>
-    <td>功能：客戶端低運算成本待命</td>
+    <td>功能：低運算成本待命</td>
     <td>設計：Producer Consumer</td>
   </tr>
   <tr>
@@ -262,7 +264,7 @@ In below shows an example that a member opens two windows to make an reservation
 
 <table>
   <tr>
-    <td>功能：分離Server端和Client端實作</td>
+    <td>功能：分離Server端和Client端的實作</td>
     <td>設計：Façade</td>
   </tr>
   <tr>
@@ -286,7 +288,7 @@ In below shows an example that a member opens two windows to make an reservation
     <td>設計：Modularization</td>
   </tr>
   <tr>
-    <td colspan="2">情境：每個GUI頁面都有一個的class封裝好相關的頁面屬性和互動函式，而頁面和頁面間的切換是在ParentFrame進行，未來如果要加入新的頁面，會最小程度的影響舊有系統的運行。<br><img src="https://i.imgur.com/NyKIl2l.png"></td>
+    <td colspan="2">情境：每個GUI頁面都有一個的class封裝好相關的頁面屬性和互動函式，而頁面與頁面間的切換是在ParentFrame進行，未來如果要加入新的頁面，會最小程度的影響舊有系統的運行。<br><img src="https://i.imgur.com/NyKIl2l.png"></td>
   </tr>
 </table>
 
