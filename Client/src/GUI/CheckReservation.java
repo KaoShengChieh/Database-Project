@@ -2,7 +2,6 @@ import java.util.List;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.SystemColor;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -21,17 +20,16 @@ import javax.swing.table.TableColumnModel;
 public class CheckReservation extends JPanel
 {
 	private static final long serialVersionUID = 1L;
-		
+	
 	JLabel sr_x;
 	JButton sh_ok;
 	JLabel lblMenu;
 	JComboBox<String> changeOrder;
 	JTable table;
 	JTextField text_BookID;
-	List<Query> orderList;
-	List<Query> historyList;
+	List<OrderInfo> orderList;
 
-	public void makeOrderList(List<Query> orderList) {
+	public void makeOrderList(List<OrderInfo> orderList) {
 		DefaultTableModel tablemodel = (DefaultTableModel)table.getModel();
 		TableColumnModel columnModel = table.getColumnModel();
 		tablemodel.setRowCount(0);
@@ -41,30 +39,30 @@ public class CheckReservation extends JPanel
 		for (int i = 0; i < resultCount; i++) {
 			String bookid = orderList.get(i).bookID;
 			String hotelid = "" + orderList.get(i).hotelID + " ";
+			String hotelAddress = orderList.get(i).city + "\u5e02" + orderList.get(i).address;
 			String singleNum = "" + orderList.get(i).roomNum[0] + " ";
 			String doubleNum = "" + orderList.get(i).roomNum[1] + " ";
 			String quadNum = "" + orderList.get(i).roomNum[2] + " ";
 			String checkin = orderList.get(i).checkin;
 			String checkout = orderList.get(i).checkout;
-//			String hotelAddress = orderList.get(i).hotelAddress;
 			String price = " NT " + orderList.get(i).price;
+			String expiration = orderList.get(i).additionalInfo;
 			
-			String expiration = "";
-			
-			Object[] data = { bookid, hotelid, singleNum, doubleNum, quadNum, checkin, checkout, price, expiration};
+			Object[] data = { bookid, hotelid, hotelAddress, singleNum, doubleNum, quadNum, checkin, checkout, price, expiration};
 			tablemodel.addRow(data);
 		}
 		
 		table.setRowHeight(22);
 		columnModel.getColumn(0).setPreferredWidth(90);
 		columnModel.getColumn(1).setPreferredWidth(80);
-		columnModel.getColumn(2).setPreferredWidth(70);
+		columnModel.getColumn(2).setPreferredWidth(200);
 		columnModel.getColumn(3).setPreferredWidth(70);
 		columnModel.getColumn(4).setPreferredWidth(70);
-		columnModel.getColumn(5).setPreferredWidth(90);
-		columnModel.getColumn(6).setPreferredWidth(90);
-		columnModel.getColumn(7).setPreferredWidth(80);
-		columnModel.getColumn(8).setPreferredWidth(120);
+		columnModel.getColumn(5).setPreferredWidth(70);
+		columnModel.getColumn(6).setPreferredWidth(100);
+		columnModel.getColumn(7).setPreferredWidth(100);
+		columnModel.getColumn(8).setPreferredWidth(100);
+		columnModel.getColumn(9).setPreferredWidth(100);
 
 		this.orderList = orderList;
 	}
@@ -120,39 +118,47 @@ public class CheckReservation extends JPanel
 		table.getTableHeader().setReorderingAllowed(false);
 		scrollPane.setViewportView(table);
 		
-		String[] heading = new String[] { "Book ID", "Hotel ID",
-				"Single", "Double", "Quad", "Check in", "Check out", "Price", "expiration" };
+		String[] heading = new String[] { "Book ID", "Hotel ID", "Address",
+				"Single", "Double", "Quad", "Check in", "Check out", "Price", "Expiration" };
 		TableColumnModel columnModel = table.getColumnModel();
+		DefaultTableCellRenderer leftRenderer = new DefaultTableCellRenderer();
 		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
 		DefaultTableCellRenderer rightRenderer = new DefaultTableCellRenderer();
 		
 		table.setModel(new DefaultTableModel(heading, 0));
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		
+		leftRenderer.setHorizontalAlignment(JLabel.LEFT);
+		columnModel.getColumn(2).setCellRenderer(leftRenderer);
+		
 		centerRenderer.setHorizontalAlignment(JLabel.CENTER);
 		columnModel.getColumn(0).setCellRenderer(centerRenderer);
-		columnModel.getColumn(5).setCellRenderer(centerRenderer);
+		columnModel.getColumn(1).setCellRenderer(centerRenderer);
 		columnModel.getColumn(6).setCellRenderer(centerRenderer);
+		columnModel.getColumn(7).setCellRenderer(centerRenderer);
+		columnModel.getColumn(9).setCellRenderer(centerRenderer);
+		
 		rightRenderer.setHorizontalAlignment(JLabel.RIGHT);
-		columnModel.getColumn(1).setCellRenderer(rightRenderer);
-		columnModel.getColumn(2).setCellRenderer(rightRenderer);
 		columnModel.getColumn(3).setCellRenderer(rightRenderer);
 		columnModel.getColumn(4).setCellRenderer(rightRenderer);
+		columnModel.getColumn(5).setCellRenderer(rightRenderer);
+		columnModel.getColumn(8).setCellRenderer(rightRenderer);
 		
 
 		JLabel lblChangeReservation = new JLabel("Change reservation:");
 		lblChangeReservation.setFont(new Font("Bahnschrift", Font.PLAIN, 20));
-		lblChangeReservation.setBounds(235, 518, 218, 31);
+		lblChangeReservation.setBounds(211, 518, 218, 31);
 		contentPane.add(lblChangeReservation);
 
 		text_BookID = new JTextField("Select Book ID");
 		text_BookID.setFont(new Font("Bahnschrift", Font.PLAIN, 20));
-		text_BookID.setBounds(432, 518, 151, 32);
+		text_BookID.setBounds(437, 518, 161, 32);
 		contentPane.add(text_BookID);
 		text_BookID.setColumns(10);
 
-		changeOrder = new JComboBox<>(new String[] {"Modify", "Cancel", "Pay"});
+		changeOrder = new JComboBox<String>(new String[] { "Modify", "Cancel", "Pay" });
 		changeOrder.setFont(new Font("Bahnschrift", Font.PLAIN, 20));
-		changeOrder.setBounds(604, 518, 177, 32);
+		changeOrder.setBounds(624, 518, 157, 32);
 		contentPane.add(changeOrder);
 
 		sh_ok = new JButton("OK");

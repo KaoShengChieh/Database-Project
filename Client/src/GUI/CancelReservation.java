@@ -24,9 +24,7 @@ public class CancelReservation extends JPanel
 	JLabel lblDoubleNumber;
 	JLabel lblQuadNumber;
 	JLabel lblHotelAddress;
-	/**
-	 * Create the panel.
-	 */
+
 	public CancelReservation() {
 		setBackground(Color.WHITE);
 		setLayout(null);
@@ -47,18 +45,14 @@ public class CancelReservation extends JPanel
 		cr_x.setBounds(935, 0, 49, 32);
 		cr_x.setForeground(new Color(51,63,125));
 		contentPane.add(cr_x);
-		/**
-		 * 12/14 add last page
-		 */
+
 		lblLastPage = new JLabel("");
 		lblLastPage.setIcon(new ImageIcon(CancelReservation.class.getResource("/images/back.png")));
 		lblLastPage.setHorizontalAlignment(SwingConstants.CENTER);
 		lblLastPage.setFont(new Font("Bahnschrift", Font.PLAIN, 20));
 		lblLastPage.setBounds(842, -2, 49, 32);
 		contentPane.add(lblLastPage);
-		/**
-		 * 12/14 add menu
-		 */
+
 		lblMenu = new JLabel("");
 		lblMenu.setIcon(new ImageIcon(CancelReservation.class.getResource("/images/menu.png")));
 		lblMenu.setHorizontalAlignment(SwingConstants.CENTER);
@@ -98,13 +92,13 @@ public class CancelReservation extends JPanel
 		lblDateFrom = new JLabel("Date from:");
 		lblDateFrom.setFont(new Font("Bahnschrift", Font.PLAIN, 20));
 		lblDateFrom.setBackground(Color.GRAY);
-		lblDateFrom.setBounds(206, 221, 279, 23);
+		lblDateFrom.setBounds(206, 221, 317, 23);
 		contentPane.add(lblDateFrom);
 		
 		lblDateTo = new JLabel("to");
 		lblDateTo.setFont(new Font("Bahnschrift", Font.PLAIN, 20));
 		lblDateTo.setBackground(Color.GRAY);
-		lblDateTo.setBounds(436, 221, 205, 23);
+		lblDateTo.setBounds(535, 221, 275, 23);
 		contentPane.add(lblDateTo);
 		
 		JLabel lblNumberOfPeople = new JLabel("Number of Rooms");
@@ -115,7 +109,7 @@ public class CancelReservation extends JPanel
 		
 		lblHotelAddress = new JLabel("Hotel Address:");
 		lblHotelAddress.setFont(new Font("Bahnschrift", Font.PLAIN, 20));
-		lblHotelAddress.setBounds(206, 282, 299, 32);
+		lblHotelAddress.setBounds(206, 282, 696, 32);
 		contentPane.add(lblHotelAddress);
 		
 		lblSingleNumber = new JLabel("Single");

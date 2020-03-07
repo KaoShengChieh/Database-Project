@@ -113,7 +113,6 @@ public class FeesSubmissionNotice {
 			msg.setSentDate(new Date());
 
 			msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(receiverAddress, false));
-			System.out.println(receiverAddress);
 
 			System.out.println("Message is ready");
 

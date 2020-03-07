@@ -34,9 +34,6 @@ public class ModifyReservation extends JPanel
 	JSpinner txt_quadroom;
 	JLabel lblHotelAddress;
 
-	/**
-	 * Create the panel.
-	 */
 	public ModifyReservation() {
 		setBackground(Color.WHITE);
 		setLayout(null);
@@ -57,18 +54,14 @@ public class ModifyReservation extends JPanel
 		cr_x.setBounds(935, 0, 49, 32);
 		cr_x.setForeground(new Color(51, 63, 125));
 		contentPane.add(cr_x);
-		/**
-		 * 12/14 add last page
-		 */
+
 		lblLastPage = new JLabel("");
 		lblLastPage.setIcon(new ImageIcon(ModifyReservation.class.getResource("/images/back.png")));
 		lblLastPage.setHorizontalAlignment(SwingConstants.CENTER);
 		lblLastPage.setFont(new Font("Bahnschrift", Font.PLAIN, 20));
 		lblLastPage.setBounds(849, -2, 49, 32);
 		contentPane.add(lblLastPage);
-		/**
-		 * 12/14 add menu
-		 */
+
 		lblMenu = new JLabel("");
 		lblMenu.setIcon(new ImageIcon(ModifyReservation.class.getResource("/images/menu.png")));
 		lblMenu.setHorizontalAlignment(SwingConstants.CENTER);

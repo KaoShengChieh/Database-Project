@@ -1,114 +1,69 @@
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
 import java.util.List;
-import java.util.StringTokenizer;
+import java.util.Random;
 
 public class HotelManager
 {
-	private HotelDB hotelDB;
-	private MemberDB memberDB;
-	private ReservationDB reservationDB;
+	private Manager manager;
 	
 	public HotelManager() {
-		hotelDB = new HotelDB();
-		memberDB = new MemberDB();
-		reservationDB = new ReservationDB();
-		connectDBs();
+		manager = new ManagerA();
 	}
 	
 	public Response signUp(Query query) {
 		Response response = new Response();
-		String userName = null;
-		String password = null;
-		String membership = null;
-		String email = null;
-		StringTokenizer tokens = new StringTokenizer(query.userName, "/");
 		
-		if (tokens.countTokens() != 4) {
-			response.setErrorMessage("Unknown sign up format");
-			return response;
-		}
-		
-		userName = tokens.nextToken();
-		password = tokens.nextToken();
-		membership = tokens.nextToken();
-		email = tokens.nextToken();
 		try {
-			if (memberDB.isMember(userName)) {
-				response.setErrorMessage("Username has been used");
-				return response;
-			}
-
-			if (membership.equals("MEMBER") || membership.equals("VIP")) {
-				memberDB.newAccount(userName, password, membership, email);
+			if (query.userInfo.userName.equals("GUEST")) {
+				response.setErrorMessage("\"GUEST\" is not a valid username");
 			} else {
-				response.setErrorMessage("Unknown membership");
-				return response;
+				manager.signUp(query.userInfo.userName, query.userInfo.password, query.userInfo.realName, query.userInfo.email, query.userInfo.membership);
+				response.isSuccessful = true;
 			}
-		} catch (Exception e) {
+		} catch (ManagerException e) {
 			response.setErrorMessage(e.getMessage());
-			return response;
 		}
 		
-		response.isSuccess = true;
 		return response;
 	}
 	
-	public Response logIn(Query query, ThreadInfo myThreadInfo) {
+	public Response logIn(Query query, MemberInfo rs) {
 		Response response = new Response();
-		String userName = null;
-		String password = null;
-		StringTokenizer tokens = new StringTokenizer(query.userName, "/");
+		MemberInfo memberInfo = null;
 		
-		switch (tokens.countTokens()) {
-			case 1:
-				userName = tokens.nextToken();
-				if (memberDB.isGuest(userName)) {
-					response.isSuccess = true;
-					return response;
-				}
-				response.setErrorMessage("Unknown log in format");
-				break;
-			case 2:
-				userName = tokens.nextToken();
-				password = tokens.nextToken();
-				try {
-					if (memberDB.isMember(userName)) {
-						if (memberDB.verifyIdentity(userName, password) == true) {
-							response.isSuccess = true;
-							myThreadInfo.userName = userName;
-							return response;
-						}
-						response.setErrorMessage("Incorrect password");
-						break;
-					}
-					response.setErrorMessage("Username not found");
-				} catch (Exception e) {
-					response.setErrorMessage(e.getMessage());
-				}
-				break;
-			default:
-				response.setErrorMessage("Unknown log in format");
+		try {
+			if (query.userInfo.userName.equals("GUEST")) {
+				rs.membership = Membership.GUEST;
+			} else {
+				memberInfo = manager.logIn(query.userInfo.userName, query.userInfo.password);
+				rs.memberID = memberInfo.memberID;
+				rs.membership = memberInfo.membership;
+			}
+			response.isSuccessful = true;
+		} catch (ManagerException e) {
+			response.setErrorMessage(e.getMessage());
 		}
 		
 		return response;
 	}
 	
-	public Response handleQuery(Query query) {
+	public Response handleQuery(MemberInfo memberInfo, Query query) {
 		Service service = new Service();
 		Response response = new Response();
 		
 		try {
-			if (memberDB.isVIP(query.userName))
-				service.doService(new VIP(), query, response);
-			else if (memberDB.isMember(query.userName))
-				service.doService(new Member(), query, response);
-			else if (memberDB.isGuest(query.userName))
-				service.doService(new Customer(), query, response);
-			else
-				response.setErrorMessage("Unknown username");
+			switch (memberInfo.membership) {
+				case VIP:
+					service.doService(new VIP(memberInfo.memberID), query, response);
+					break;
+				case MEMBER:
+					service.doService(new Member(memberInfo.memberID), query, response);
+					break;
+				case GUEST:
+					service.doService(query, response);
+					break;
+				default:
+					response.setErrorMessage("Unknown membership");
+			}
 		} catch (Exception e) {
 			response.setErrorMessage(e.getMessage());
 		}
@@ -127,131 +82,31 @@ public class HotelManager
 
 	private class Customer implements Visitable {
 		public void listHotel(Query query, Response response) throws CustomerActionFailException {
-			List<HotelInfo> hotelInfoList = null;
-			
 			viewAD(query, response);
-			
-			if (query.roomNum[0] + query.roomNum[1] + query.roomNum[2] <= 0
-				|| query.roomNum[0] < 0 || query.roomNum[1] < 0 || query.roomNum[2] < 0) {
-				throw new CustomerActionFailException("Invalid number of rooms");
-			}
 
-			if (countDays(query.checkin, query.checkout) <= 0) {
-				throw new CustomerActionFailException("Check out can't be before check in");
-			}
+			List<HotelInfo>	hotelList = null;		
 			
 			try {
-				hotelInfoList = hotelDB.hotelList(query.roomNum, query.checkin, query.checkout, query.bookID);
-			} catch (Exception e) {
+				hotelList = manager.listHotel(query.orderInfo.city, query.orderInfo.additionalInfo, query.orderInfo.roomNum, query.orderInfo.checkin, query.orderInfo.checkout);
+				response.setHotelInfoList(hotelList);
+			} catch (HotelException e) {	
 				throw new CustomerActionFailException(e.getMessage());
 			}
-			
-			response.setHotelInfoList(hotelInfoList);
-		}
-		
-		public void makeOrder(Query query, Response response) throws CustomerActionFailException {
-			if (query.roomNum[0] + query.roomNum[1] + query.roomNum[2] <= 0
-				|| query.roomNum[0] < 0 || query.roomNum[1] < 0 || query.roomNum[2] < 0) {
-				throw new CustomerActionFailException("Invalid number of rooms");
-			}
-
-			if (countDays(query.checkin, query.checkout) <= 0) {
-				throw new CustomerActionFailException("Check out can't be before check in");
-			}
-			
-			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");  
-			String today = formatter.format(new java.util.Date());
-			if (countDays(today, query.checkin) <= 0) {
-				throw new CustomerActionFailException("Can only book reservation after " + today);
-			}
-			
-			try {
-				query.bookID = memberDB.generateBookID(query.userName);
-				reservationDB.insertReservation(query.userName, query.bookID,
-					query.hotelID, query.roomNum, query.checkin, query.checkout);
-				query.price = hotelDB.calculatePrice(query.hotelID, query.roomNum, query.checkin, query.checkout);
-				reservationDB.updatePrice(query.userName, query.bookID, query.price);
-			} catch (Exception e) {
-				throw new CustomerActionFailException(e.getMessage());
-			}
-
-			response.setResult(query);
-		}
-		
-		public void listOrder(Query query, Response response) throws CustomerActionFailException {
-			List<Query> queryList = null;
-			
-			try {
-				queryList = reservationDB.reservationInfoList(query.userName);
-			} catch (Exception e) {
-				throw new CustomerActionFailException(e.getMessage());
-			}
-			
-			response.setOrderList(queryList);
-		}
-
-		public void cancelOrder(Query query, Response response) throws CustomerActionFailException {
-			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");  
-			String today = formatter.format(new java.util.Date());
-			
-			try {
-				if (countDays(today, reservationDB.reservationInfo(query.userName, query.bookID).checkin) <= 0) {
-					throw new CustomerActionFailException("Can't cancel reservation before " + today);
-				}
-				reservationDB.removeReservation(query.userName, query.bookID);
-			} catch (Exception e) {
-				throw new CustomerActionFailException(e.getMessage());
-			}
-			
-			response.isSuccess = true;
-		}
-
-		public void modifyOrder(Query query, Response response) throws CustomerActionFailException {
-			if (query.roomNum[0] + query.roomNum[1] + query.roomNum[2] <= 0
-				|| query.roomNum[0] < 0 || query.roomNum[1] < 0 || query.roomNum[2] < 0) {
-				throw new CustomerActionFailException("Invalid number of rooms");
-			}
-
-			if (countDays(query.checkin, query.checkout) <= 0) {
-				throw new CustomerActionFailException("Check out can't be before check in");
-			}
-			
-			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");  
-			String today = formatter.format(new java.util.Date());
-			
-			try {
-				if (countDays(today, reservationDB.reservationInfo(query.userName, query.bookID).checkin) <= 0) {
-					throw new CustomerActionFailException("Can't modify reservation before " + today);
-				}
-				reservationDB.updateReservation(query.userName, query.bookID,
-					query.roomNum, query.checkin, query.checkout);
-				Query reservation = reservationDB.reservationInfo(query.userName, query.bookID);
-				reservation.price = hotelDB.calculatePrice(
-					reservation.hotelID, reservation.roomNum, reservation.checkin, reservation.checkout);
-				reservationDB.updatePrice(reservation.userName, reservation.bookID, reservation.price);
-			} catch (Exception e) {
-				throw new CustomerActionFailException(e.getMessage());
-			}
-			
-			response.isSuccess = true;
-		}
-		
-		public void listReservation(Query query, Response response) throws CustomerActionFailException {
-			//TODO
-		}
-		
-		public void pay(Query query, Response response) {
-			FeesSubmissionNotice notice = new FeesSubmissionNotice("Citi Bank");
-			notice.setReceiver("Pipi Lai", "b06705031@ntu.edu.tw");
-			notice.setFees(3000);
-			notice.send();
-			System.out.println("Send Email4");
-			response.isSuccess = true;
-			return;
 		}
 		
 		public void viewAD(Query query, Response response) {
 			//TODO
+			Random random = new Random();
+			response.ADcode = random.nextInt(16);
+		}
+		
+		public void pay(Query query, Response response) throws CustomerActionFailException {
+			payForVIP(query, response);
+		}
+		
+		public void payForVIP(Query query, Response response) {
+			//TODO
+			/* If success, should require client re-login */
 		}
 		
 		public void accept(Visitor visitor) {}
@@ -259,10 +114,6 @@ public class HotelManager
 	
 	private class CustomerActionFailException extends Exception {
 		private static final long serialVersionUID = 1L;
-		
-		public CustomerActionFailException() {
-			super("Customer Action Fail Exception");
-		}
 
 		public CustomerActionFailException(String message) {
 			super(message);
@@ -270,30 +121,89 @@ public class HotelManager
 	}
 
 	private class Member extends Customer {
+		private int memberID;
+		
+		public Member(int memberID) {
+			super();
+			this.memberID = memberID;
+		}
+		
 		public void doMember() {
 		}
 		
-		public void pay(Query query, Response response) {
-			//TODO
-			boolean isPayForVIP = false;
-			System.out.println("Send Email1");
-			if (!isPayForVIP) {
-				super.pay(query, response);
-				System.out.println("Send Email2");
-			} else {
-				payForVIP(query, response);
+		public void makeReservation(Query query, Response response) throws CustomerActionFailException {
+			OrderInfo reservertionInfo = null;
+			
+			try {
+				reservertionInfo = manager.book(memberID, query.orderInfo.hotelID, query.orderInfo.roomNum, query.orderInfo.checkin, query.orderInfo.checkout);
+				response.setOrder(reservertionInfo);
+			} catch (ManagerException e) {
+				throw new CustomerActionFailException(e.getMessage());
+			} catch (HotelException e) {
+				throw new CustomerActionFailException(e.getMessage());
 			}
-			System.out.println("Send Email3");
 		}
 		
-		public void payForVIP(Query query, Response response) {
-			//TODO
-			/* If success, should require client re-login */
-			System.out.println("Send Email5");
+		public void listReservation(Query query, Response response) throws CustomerActionFailException {
+			List<OrderInfo> reservationList = null;
+
+			try {
+				reservationList = manager.listReservation(memberID);
+				response.setOrderList(reservationList);
+			} catch (ManagerException e) {
+				throw new CustomerActionFailException(e.getMessage());
+			} catch (HotelException e) {
+				throw new CustomerActionFailException(e.getMessage());
+			}
 		}
-		
-		public void modifyOrder(Query query, Response response) throws CustomerActionFailException {
+
+		public void modifyReservation(Query query, Response response) throws CustomerActionFailException {
 			throw new CustomerActionFailException("Permission denied. VIP only.");
+		}
+
+		public void cancelReservation(Query query, Response response) throws CustomerActionFailException {
+			try {
+				manager.cancel(query.additionalInfo);
+				response.isSuccessful = true;
+			} catch (ManagerException e) {
+				throw new CustomerActionFailException(e.getMessage());
+			} catch (HotelException e) {
+				throw new CustomerActionFailException(e.getMessage());
+			}
+		}
+		
+		public void pay(Query query, Response response) throws CustomerActionFailException {
+			boolean isPayForVIP = false;
+			if (isPayForVIP) {
+				payForVIP(query, response);
+				return;
+			}
+			
+			OrderInfo orderInfo = null;
+			
+			try {
+				orderInfo = manager.pay(query.additionalInfo, query.creditCardInfo.CS_ID, query.creditCardInfo.number, query.creditCardInfo.expirationDate, query.creditCardInfo.securityCode);
+				response.setOrder(orderInfo);
+			} catch (ManagerException e) {
+				throw new CustomerActionFailException(e.getMessage());
+			} catch (HotelException e) {
+				throw new CustomerActionFailException(e.getMessage());
+			} catch (CashSystemException e) {
+				throw new CustomerActionFailException(e.getMessage());
+			}
+		}
+		
+		public void listOrder(Query query, Response response) throws CustomerActionFailException {
+			List<OrderInfo> orderList = null;
+
+			try {
+				orderList = manager.listOrder(memberID);
+				response.setOrderList(orderList);
+			} catch (HotelException e) {
+				throw new CustomerActionFailException(e.getMessage());
+			} catch (CashSystemException e) {
+				throw new CustomerActionFailException(e.getMessage());
+			}
 		}
 		
 		public void accept(Visitor visitor) {
@@ -301,14 +211,44 @@ public class HotelManager
 		}   
 	}
 
-	private class VIP extends Customer {
+	private class VIP extends Member {
+		public VIP(int memberID) {
+			super(memberID);
+		}
+		
 		public void doVIP() {
 		}
 
-		public void viewAD(Query query, Response response) {
-			// do nothing
+		public void modifyReservation(Query query, Response response) throws CustomerActionFailException {
+			try {
+				manager.modify(query.orderInfo.bookID, query.orderInfo.roomNum, query.orderInfo.checkin, query.orderInfo.checkout);
+				response.isSuccessful = true;
+			} catch (ManagerException e) {
+				throw new CustomerActionFailException(e.getMessage());
+			} catch (HotelException e) {
+				throw new CustomerActionFailException(e.getMessage());
+			}
 		}
-
+		
+		public void viewAD(Query query, Response response) {
+			response.ADcode = -1;
+		}
+		
+		public void pay(Query query, Response response) throws CustomerActionFailException {
+			OrderInfo orderInfo = null;
+			
+			try {
+				orderInfo = manager.pay(query.additionalInfo, query.creditCardInfo.CS_ID, query.creditCardInfo.number, query.creditCardInfo.expirationDate, query.creditCardInfo.securityCode);
+				response.setOrder(orderInfo);
+			} catch (ManagerException e) {
+				throw new CustomerActionFailException(e.getMessage());
+			} catch (HotelException e) {
+				throw new CustomerActionFailException(e.getMessage());
+			} catch (CashSystemException e) {
+				throw new CustomerActionFailException(e.getMessage());
+			}
+		}
+		
 		public void accept(Visitor visitor) {
 			visitor.visit(this);
 		}    
@@ -327,48 +267,49 @@ public class HotelManager
 	private class Service {
 		private Visitor visitor = new VisitorImpl();
 
-		public void doService(Customer customer, Query query, Response response)
+		public void doService(Query query, Response response)
 			throws CustomerActionFailException {
+			Customer customer = new Customer();
 			((Visitable)customer).accept(visitor);
 			
 			switch (query.type) {
-				case LISTHOTEL:
+				case LIST_HOTEL:
 					customer.listHotel(query, response);
-					break;
-				case BOOK:
-					customer.makeOrder(query, response);
-					break;
-				case LISTRESERVATION:	
-					customer.listReservation(query, response);
-					break;
-				case CANCEL:
-					customer.cancelOrder(query, response);
-					break;
-				case MODIFY:
-					customer.modifyOrder(query, response);
-					break;
-				case PAY:
-					customer.pay(query, response);
-					break;
-				case LISTORDER:
-					customer.listOrder(query, response);
 					break;
 				default:
 					throw new CustomerActionFailException("Unknown query");
 			}
 		}
-	}
-	
-	private void connectDBs() {
-		hotelDB.connectOtherDB(reservationDB);
-		reservationDB.connectOtherDB(hotelDB);
-	}
-	
-	private int countDays(String D1, String D2) {
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-		LocalDate firstDate = LocalDate.parse(D1, formatter);
-		LocalDate secondDate = LocalDate.parse(D2, formatter);
 		
-		return (int)ChronoUnit.DAYS.between(firstDate, secondDate);
+		public void doService(Member member, Query query, Response response)
+			throws CustomerActionFailException {
+			((Visitable)member).accept(visitor);
+			
+			switch (query.type) {
+				case LIST_HOTEL:
+					member.listHotel(query, response);
+					break;
+				case BOOK:
+					member.makeReservation(query, response);
+					break;
+				case LIST_RESERVATION:	
+					member.listReservation(query, response);
+					break;
+				case MODIFY:
+					member.modifyReservation(query, response);
+					break;
+				case CANCEL:
+					member.cancelReservation(query, response);
+					break;
+				case PAY:
+					member.pay(query, response);
+					break;
+				case LIST_ORDER:
+					member.listOrder(query, response);
+					break;
+				default:
+					throw new CustomerActionFailException("Unknown query");
+			}
+		}
 	}
 }

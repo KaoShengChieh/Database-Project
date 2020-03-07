@@ -2,9 +2,7 @@ import java.util.Arrays;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.SystemColor;
-
 import javax.swing.ButtonGroup;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -35,14 +33,13 @@ public class CreateAccount extends JPanel
 	JRadioButton rdbtnMember;
 	JRadioButton rdbtnVIP ;
 	ButtonGroup btnGroup;
+	JTextField txtRealName;
+	private JLabel lblExplainRealName;
 	
 	public boolean isCorrect(char[] a, char[] b) {
 		return Arrays.equals(a,b);
 	}
 	
-	/**
-	 * Create the panel.
-	 */
 	public CreateAccount() {
 		setBackground(Color.WHITE);
 		setLayout(null);
@@ -81,6 +78,18 @@ public class CreateAccount extends JPanel
 		usernameField.setBounds(246, 160, 232, 32);
 		panel.add(usernameField);
 		
+		JLabel lblRealName = new JLabel("RealName");
+		lblRealName.setForeground(Color.WHITE);
+		lblRealName.setFont(new Font("Bahnschrift", Font.PLAIN, 20));
+		lblRealName.setBounds(490, 124, 186, 30);
+		panel.add(lblRealName);
+				
+		txtRealName = new JTextField();
+		txtRealName.setFont(new Font("Bahnschrift", Font.PLAIN, 20));
+		txtRealName.setColumns(10);
+		txtRealName.setBounds(490, 160, 232, 32);
+		panel.add(txtRealName);
+		
 		JLabel lblMembership = new JLabel("Membership");
 		lblMembership.setForeground(Color.WHITE);
 		lblMembership.setFont(new Font("Bahnschrift", Font.PLAIN, 22));
@@ -88,12 +97,6 @@ public class CreateAccount extends JPanel
 		lblMembership.setBounds(246, 281, 220, 23);
 		panel.add(lblMembership);
 		
-		/**
-		 * 12/13 add user email option
-		 * which has lblEmail, textEmail, comboEmail
-		 * 12/13
-		 * TODO: email hasn't add to user query
-		 */
 		JLabel lblEmail = new JLabel("Your Email");
 		lblEmail.setForeground(Color.WHITE);
 		lblEmail.setFont(new Font("Bahnschrift", Font.PLAIN, 20));
@@ -162,6 +165,13 @@ public class CreateAccount extends JPanel
 		btnGroup = new ButtonGroup();
 		btnGroup.add(rdbtnMember);
 		btnGroup.add(rdbtnVIP);
+		
+		lblExplainRealName = new JLabel("use space to seperate names");
+		lblExplainRealName.setToolTipText("");
+		lblExplainRealName.setForeground(Color.WHITE);
+		lblExplainRealName.setFont(new Font("Bahnschrift", Font.PLAIN, 12));
+		lblExplainRealName.setBounds(490, 202, 245, 15);
+		panel.add(lblExplainRealName);
 		
 		lblexplainMem = new JLabel("With AD while modifying");
 		lblexplainMem.setFont(new Font("Bahnschrift", Font.PLAIN, 12));

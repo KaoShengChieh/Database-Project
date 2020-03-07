@@ -1,0 +1,7 @@
+CREATE TABLE `AccountLegal` (
+  `LP_ID` INTEGER PRIMARY KEY,
+  `Hotel_ID` int(11) DEFAULT NULL,
+  `CS_ID` int(11) DEFAULT NULL,
+  `Balance` int(11) DEFAULT NULL,
+  CONSTRAINT `CS_ID` FOREIGN KEY (`CS_ID`) REFERENCES `cashsystem` (`CS_ID`)
+)

@@ -13,6 +13,12 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.ListIterator;
 
+class ThreadInfo {
+	boolean updateReservation;
+	boolean updateOrder;
+	MemberInfo memberInfo;
+}
+
 public class Server
 {
 	private static final String CONFIG = "./ServerConfig.txt";
@@ -130,18 +136,19 @@ public class Server
 				query = (Query)inputObject.readObject();
 				printQuery(query);
 				while (!query.quit()) {
-					if (query.type == QueryType.SIGNUP) {
+					if (query.type == QueryType.SIGN_UP) {
 						response = hotelManager.signUp(query);
-						if (response.isSuccess)
+						if (response.isSuccessful)
 							hasLogin = true;
-					} else if (query.type == QueryType.LOGIN) {
-						response = hotelManager.logIn(query, myThreadInfo);
-						if (response.isSuccess) {
+					} else if (query.type == QueryType.LOG_IN) {
+						MemberInfo memberInfo = new MemberInfo();
+						response = hotelManager.logIn(query, memberInfo);
+						if (response.isSuccessful) {
 							hasLogin = true;
-							myThreadInfo.userName = new StringTokenizer(query.userName, "/").nextToken();
+							myThreadInfo.memberInfo = memberInfo;
 						}
 					} else if (hasLogin) {
-						response = hotelManager.handleQuery(query);
+						response = hotelManager.handleQuery(myThreadInfo.memberInfo, query);
 					} else {
 						response.setErrorMessage("Has not logged in yet");
 					}
@@ -185,13 +192,25 @@ public class Server
 				ListIterator<ThreadInfo> itr = currentUser.listIterator();
 				ThreadInfo threadInfo;
 				
-				if (response.result != null
-					&& response.result.type == QueryType.BOOK
-					&& response.isSuccess) {
+				if (response.isSuccessful == false) {
+					return;
+				}			
+					
+				if (response.type == QueryType.BOOK
+					|| response.type == QueryType.MODIFY
+					|| response.type == QueryType.CANCEL) {
 					while (itr.hasNext()) {
 						threadInfo = itr.next();
-						if (threadInfo.userName.equals(myThreadInfo.userName)) {
-							threadInfo.update = true;
+						if (threadInfo.memberInfo.memberID == myThreadInfo.memberInfo.memberID) {
+							threadInfo.updateReservation = true;
+						}
+					}
+					currentUser.notifyAll();
+				} else if (response.type == QueryType.PAY) {
+					while (itr.hasNext()) {
+						threadInfo = itr.next();
+						if (threadInfo.memberInfo.memberID == myThreadInfo.memberInfo.memberID) {
+							threadInfo.updateOrder = true;
 						}
 					}
 					currentUser.notifyAll();
@@ -217,7 +236,7 @@ public class Server
 		
 		private void sendUpdate() {
 			synchronized (currentUser) {
-				while (!myThreadInfo.update) {
+				while (!myThreadInfo.updateReservation && !myThreadInfo.updateOrder) {
 					try {
 						currentUser.wait();
 					} catch (InterruptedException e)  {
@@ -225,13 +244,9 @@ public class Server
 					}
 				}
 				
-				Query query = new Query();
-				query.type = QueryType.LISTORDER;
-				query.userName = myThreadInfo.userName;
-				Response update = hotelManager.handleQuery(query);
+				Response update = hotelManager.handleQuery(myThreadInfo.memberInfo, new Query(QueryType.LIST_RESERVATION));
 				printReponse(update);
-				update.result = query;
-				query.type = QueryType.UPDATE;
+				update.type = QueryType.UPDATE_RESERVATION;
 				try {
 					outputObject.writeObject(update);
 					outputObject.flush();
@@ -239,24 +254,70 @@ public class Server
 					System.out.println(e.getMessage());
 					System.out.println("IO error/ Client " + this.getName() + " terminated abruptly");
 				}
-			
-				myThreadInfo.update = false;
+				
+				myThreadInfo.updateReservation = false;
+				
+				if (myThreadInfo.updateOrder) {
+					update = hotelManager.handleQuery(myThreadInfo.memberInfo, new Query(QueryType.LIST_ORDER));
+					printReponse(update);
+					update.type = QueryType.UPDATE_ORDER;
+					try {
+						outputObject.writeObject(update);
+						outputObject.flush();
+					} catch (IOException e) {
+						System.out.println(e.getMessage());
+						System.out.println("IO error/ Client " + this.getName() + " terminated abruptly");
+					}
+					
+					myThreadInfo.updateOrder = false;
+				}
 			}
 		}
 	}
 		
 	private void printQuery(Query query) {
-		System.out.println("[type] " + query.type.toString() +
-			" [username] " + query.userName +
-			" [bookID] " + query.bookID +
-			" [hotelID] " + query.hotelID +
-			" [roomNum] " + Arrays.toString(query.roomNum) +
-			" [checkin] " + query.checkin +
-			" [checkout] " + query.checkout);
+		System.out.print("[type] " + query.type.toString() +
+			" [additionalInfo] " + query.additionalInfo);
+		
+		switch (query.type) {
+			case SIGN_UP: case LOG_IN:
+				System.out.print(
+					" [username] " + query.userInfo.userName +
+					" [realName] " + query.userInfo.realName +
+					" [password] " + query.userInfo.password +
+					" [email] " + query.userInfo.email +
+					" [membership] " + query.userInfo.membership);
+				break;
+			case LIST_HOTEL: case BOOK: case MODIFY:
+				System.out.print(
+					" [bookID] " + query.orderInfo.bookID +
+					" [hotelID] " + query.orderInfo.hotelID +
+					" [star] " + query.orderInfo.star +
+					" [city] " + query.orderInfo.city +
+					" [address] " + query.orderInfo.address +
+					" [roomNum] " + Arrays.toString(query.orderInfo.roomNum) +
+					" [checkin] " + query.orderInfo.checkin +
+					" [checkout] " + query.orderInfo.checkout +
+					" [price] " + query.orderInfo.price +
+					" [additionalInfo] " + query.orderInfo.additionalInfo);
+				break;
+			case PAY:
+				System.out.print(
+					" [CS_ID] " + query.creditCardInfo.CS_ID +
+					" [number] " + query.creditCardInfo.number +
+					" [expirationDate] " + query.creditCardInfo.expirationDate +
+					" [securityCode] " + query.creditCardInfo.securityCode +
+					" [ownerName] " + query.creditCardInfo.ownerName);
+				break;
+			default:
+				break;
+		}
+		
+		System.out.println("");
 	}		
 		
 	private void printReponse(Response response) {
-		System.out.println("[isSuccess] " + response.isSuccess +
-			(response.isSuccess ? "" : " [errorMessage] " + response.getErrorMessage()));
+		System.out.println("[isSuccess] " + response.isSuccessful +
+			(response.isSuccessful ? "" : " [errorMessage] " + response.getErrorMessage()));
 	}
 }

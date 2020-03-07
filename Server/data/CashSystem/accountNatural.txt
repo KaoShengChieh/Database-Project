@@ -1,0 +1,9 @@
+CREATE TABLE `AccountNatural` (
+  `NP_ID` int(11) DEFAULT NULL,
+  `CS_ID` int(11) DEFAULT NULL,
+  `Name` varchar(45) DEFAULT NULL,
+  `Email` varchar(45) DEFAULT NULL,
+  `Balance` int(11) DEFAULT NULL,
+  PRIMARY KEY (`NP_ID`,`CS_ID`),
+  CONSTRAINT `CS_ID_fk1` FOREIGN KEY (`CS_ID`) REFERENCES `cashsystem` (`CS_ID`) ON DELETE CASCADE ON UPDATE CASCADE
+)

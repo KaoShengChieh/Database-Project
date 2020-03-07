@@ -1,0 +1,7 @@
+CREATE TABLE `Ad` (
+  `Ad_ID` INTEGER PRIMARY KEY,
+  `Advertiser_ID` int(11) DEFAULT NULL,
+  `Type` varchar(45) DEFAULT NULL,
+  `Price` int(11) DEFAULT NULL,
+  CONSTRAINT `Advertiser_ID_fk1` FOREIGN KEY (`Advertiser_ID`) REFERENCES `advertiser` (`Advertiser_ID`) ON DELETE CASCADE ON UPDATE CASCADE
+)

@@ -61,4 +61,3 @@ case "$OSTYPE" in
 esac
 
 $JVM -cp $CP $EXEC
-

@@ -1,5 +1,7 @@
 #!/bin/bash
 
+#!/bin/bash
+
 set +e
 
 rm bin/*.class
@@ -52,6 +54,10 @@ check_jdk_version
 CC=javac
 DEBUG=-Xlint
 SRC=src/*.java
+FACADE=src/facade/*.java
+MANAGER_DB=src/manager/*.java
+HOTEL_DB=src/hotel/*.java
+BANK_DB=src/bank/*.java
 DEST=bin
 
 case "$OSTYPE" in
@@ -66,5 +72,4 @@ case "$OSTYPE" in
   	exit 1 ;;
 esac
 
-$CC $DEBUG -cp $CP $SRC -d $DEST
-
+$CC $DEBUG -cp $CP $SRC $FACADE $MANAGER_DB $HOTEL_DB $BANK_DB -d $DEST

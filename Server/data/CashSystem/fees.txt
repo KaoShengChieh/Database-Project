@@ -1,0 +1,10 @@
+CREATE TABLE `Fees` (
+  `Book_ID` TEXT PRIMARY KEY,
+  `CS_ID` int(11) DEFAULT NULL,
+  `CardNumber` varchar(16) DEFAULT NULL,
+  `ExpirationDate` varchar(5) DEFAULT NULL,
+  `SecurityCode` varchar(4) DEFAULT NULL,
+  `Amount` int(11) DEFAULT NULL,
+  `Hotel_ID` int(11) DEFAULT NULL,
+  CONSTRAINT `CS_ID_fk3` FOREIGN KEY (`CS_ID`) REFERENCES `cashsystem` (`CS_ID`)
+)

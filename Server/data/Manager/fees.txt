@@ -1,0 +1,9 @@
+CREATE TABLE `Fees` (
+  `Book_ID` TEXT NOT NULL,
+  `CS_ID` int(11) NOT NULL,
+  `CardNumber` varchar(18) DEFAULT NULL,
+  `ExpirationDate` varchar(5) DEFAULT NULL,
+  `SecurityCode` varchar(3) DEFAULT NULL,
+  PRIMARY KEY (`Book_ID`,`CS_ID`),
+  CONSTRAINT `Book_ID_fk1` FOREIGN KEY (`Book_ID`) REFERENCES `reservation` (`Book_ID`) ON DELETE CASCADE ON UPDATE CASCADE
+)

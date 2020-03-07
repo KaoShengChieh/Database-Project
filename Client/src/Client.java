@@ -1,18 +1,16 @@
-import java.util.StringTokenizer;
-import java.net.Socket;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.net.Socket;
+import java.util.StringTokenizer;
+import javax.swing.JOptionPane;
 
 public class Client
 {
 	private static final String CONFIG = "./ClientConfig.txt";
-	private ResultPopUp popupWindow;
 	private Socket socket;
 	private ObjectInputStream inputObject;
 	private ObjectOutputStream outputObject;
@@ -71,13 +69,6 @@ public class Client
 	public Client(String configuration) {
 		String serverAddress = null;
 		String port = null;
-		
-		popupWindow = new ResultPopUp();
-		popupWindow.addWindowListener(new WindowAdapter() {
-			public void windowClosing(WindowEvent e) {
-				System.exit(0);
-			}
-		});
 		
 		try {
 			InputStream inputStream = getClass().getResourceAsStream(configuration); 
@@ -142,8 +133,10 @@ public class Client
 	}
 	
 	public void setResponse(Response response) {
-		if (response.result != null && response.result.type == QueryType.UPDATE) {
-			user.updateView(response);
+		if (response.type == QueryType.UPDATE_RESERVATION){
+			user.updateReservation(response);
+		} else if (response.type == QueryType.UPDATE_ORDER){
+			user.updateReservation(response);
 		} else {
 			packet.setResponse(response);
 		}
@@ -167,12 +160,8 @@ public class Client
 	}
 	
 	public void close(String errMessage) {
-		popupWindow.show(errMessage);
+		JOptionPane.showMessageDialog(null, errMessage, "Error", JOptionPane.WARNING_MESSAGE);
 		close();
-		try {
-			Thread.currentThread().join();
-		} catch (InterruptedException e) {
-			// do nothing
-		}
+		System.exit(0);
 	}
 }

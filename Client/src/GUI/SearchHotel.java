@@ -9,12 +9,13 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 public class SearchHotel extends JPanel
 {
@@ -33,16 +34,17 @@ public class SearchHotel extends JPanel
 	JSpinner searchhotel_maxstarspinner;
 	JButton bsearchhotel_search;
 
-	public void showDate() {
-		java.util.Date d = new java.util.Date();
-		SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");
-		sh_datecheckin.setText(f.format(d));
-		sh_datecheckout.setText(f.format(d));
+	public void showDate(String checkin) {
+		sh_datecheckin.setText(checkin);
+		
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");  
+		Calendar calendar = Calendar.getInstance();
+		try {calendar.setTime(formatter.parse(checkin));} catch (ParseException e) {}
+		calendar.add(Calendar.DATE, 1);
+		String nextDay = formatter.format(calendar.getTime());
+		sh_datecheckout.setText(nextDay);
 	}
 
-	/**
-	 * Create the panel.
-	 */
 	public SearchHotel() {
 		setBackground(Color.WHITE);
 		setLayout(null);
@@ -79,6 +81,7 @@ public class SearchHotel extends JPanel
 			public void mousePressed(MouseEvent arg0) {
 				DatePopup datepopup = new DatePopup(sh_datecheckin);
 				datepopup.showDialog();
+				showDate(sh_datecheckin.getText());
 			}
 		});
 		sh_datecheckin.setFont(new Font("Bahnschrift", Font.PLAIN, 20));
@@ -104,7 +107,9 @@ public class SearchHotel extends JPanel
 		sh_datecheckout.setBounds(651, 178, 218, 48);
 		contentPane.add(sh_datecheckout);
 
-		showDate();
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");  
+		String today = formatter.format(new java.util.Date());
+		showDate(today);
 
 		JLabel lblRoomType = new JLabel("Room numbers");
 		lblRoomType.setFont(new Font("Bahnschrift", Font.PLAIN, 20));

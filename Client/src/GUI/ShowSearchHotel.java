@@ -2,7 +2,6 @@ import java.util.List;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.SystemColor;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -29,9 +28,6 @@ public class ShowSearchHotel extends JPanel
 	JTable table;
 	JLabel lblLastPage ;
 	JComboBox<String> showsh_combobox;
-	/**
-	 * 
-	 */
 	List<HotelInfo> hotelList;
 
 	public void makeHotellist() {
@@ -49,6 +45,7 @@ public class ShowSearchHotel extends JPanel
 			for (int j = 0; j < hotelList.get(i).star; j++) {
 				star += "\u2605";
 			}
+
 			String city = hotelList.get(i).city; // locality
 			String address = hotelList.get(i).address; // address
 			String price = "NT " + hotelList.get(i).price; // price
@@ -68,9 +65,6 @@ public class ShowSearchHotel extends JPanel
 		makeHotellist();
 	}
 
-	/**
-	 * Create the panel.
-	 */
 	public ShowSearchHotel() {
 		setBackground(Color.WHITE);
 		setLayout(null);
@@ -92,7 +86,7 @@ public class ShowSearchHotel extends JPanel
 		showsh_signin = new JLabel("Sign in");
 		showsh_signin.setForeground(new Color(51, 63, 125));
 		showsh_signin.setFont(new Font("Bahnschrift", Font.PLAIN, 16));
-		showsh_signin.setBounds(795, 0, 49, 32);
+		showsh_signin.setBounds(800, 0, 70, 32);
 		contentPane.add(showsh_signin);
 		
 		showsh_x = new JLabel("");
@@ -121,8 +115,8 @@ public class ShowSearchHotel extends JPanel
 		lblResult.setBackground(Color.GRAY);
 		lblResult.setBounds(206, 132, 193, 23);
 		contentPane.add(lblResult);
-
-		String[] sortMethod = new String[] {"Price: Low to High", "Star", "Locality"};
+		
+		String[] sortMethod = new String[] { "Price: Low to High", "Star", "Locality" };
 		showsh_combobox = new JComboBox<>(sortMethod);
 		showsh_combobox.setToolTipText("Filter");
 		showsh_combobox.setFont(new Font("Bahnschrift", Font.PLAIN, 20));
@@ -138,7 +132,7 @@ public class ShowSearchHotel extends JPanel
 		contentPane.add(showsh_sort);
 
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(206, 178, 761, 382);
+		scrollPane.setBounds(206, 173, 761, 382);
 		contentPane.add(scrollPane);
 
 		table = new JTable();

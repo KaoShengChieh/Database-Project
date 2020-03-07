@@ -1,0 +1,11 @@
+CREATE TABLE `Reservation` (
+  `Book_ID` TEXT PRIMARY KEY,
+  `Hotel_ID` int(11) DEFAULT NULL,
+  `Single` int(11) DEFAULT NULL,
+  `Double` int(11) DEFAULT NULL,
+  `Quad` int(11) DEFAULT NULL,
+  `CheckIn` datetime DEFAULT NULL,
+  `CheckOut` datetime DEFAULT NULL,
+  `Customer` varchar(45) DEFAULT NULL,
+  CONSTRAINT `Hotel_ID_fk2` FOREIGN KEY (`Hotel_ID`) REFERENCES `hotel` (`Hotel_ID`) ON DELETE CASCADE ON UPDATE CASCADE
+)

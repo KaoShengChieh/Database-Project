@@ -1,0 +1,6 @@
+CREATE TABLE `MemberViewAd` (
+  `Member_ID` int(11) NOT NULL,
+  `Ad_ID` int(11) NOT NULL,
+  PRIMARY KEY (`Member_ID`,`Ad_ID`),
+  CONSTRAINT `Member_ID_fk1` FOREIGN KEY (`Member_ID`) REFERENCES `member` (`Member_ID`) ON DELETE CASCADE ON UPDATE CASCADE
+)

@@ -1,0 +1,4 @@
+CREATE TABLE `CashSystem` (
+  `CS_ID` INTEGER PRIMARY KEY,
+  `CS_Name` varchar(45) DEFAULT NULL
+)

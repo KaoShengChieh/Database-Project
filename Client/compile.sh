@@ -51,21 +51,11 @@ check_jdk_version
 
 CC=javac
 DEBUG=-Xlint
+CP=bin
 SRC=src/*.java
+FACADE=src/facade/*.java
 GUI=src/GUI/*.java
 DEST=bin
 
-case "$OSTYPE" in
-  darwin*) 
-  	CP=bin ;;
-  linux*)  
-  	CP=bin ;;
-  msys*)   
-  	CP=bin ;;
-  *)
-  	echo "Not support $OSTYPE operating system"
-  	exit 1 ;;
-esac
-
-$CC $DEBUG -cp $CP $SRC $GUI -d $DEST
+$CC $DEBUG -cp $CP $SRC $FACADE $GUI -d $DEST
 

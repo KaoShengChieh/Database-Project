@@ -1,0 +1,7 @@
+CREATE TABLE `Room` (
+  `Hotel_ID` int(11) NOT NULL,
+  `RoomType` varchar(45) NOT NULL,
+  `Price` int(11) DEFAULT NULL,
+  `Number` int(11) DEFAULT NULL,
+  CONSTRAINT `Hotel_ID_fk1` FOREIGN KEY (`Hotel_ID`) REFERENCES `hotel` (`Hotel_ID`) ON DELETE CASCADE ON UPDATE CASCADE
+)

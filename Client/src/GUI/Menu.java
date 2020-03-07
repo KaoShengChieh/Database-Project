@@ -18,11 +18,7 @@ public class Menu extends JPanel
 	JLabel lblTitle;
 	JLabel lblLastPage;
 	JButton bbook_history;
-	
 
-	/**
-	 * Create the panel.
-	 */
 	public Menu() {
 		setBackground(Color.WHITE);
 		setLayout(null);
@@ -52,7 +48,7 @@ public class Menu extends JPanel
 		JLabel lblSearchHotel = new JLabel("Search available hotel &  Book");
 		lblSearchHotel.setFont(new Font("Bahnschrift", Font.PLAIN, 26));
 		lblSearchHotel.setBackground(Color.GRAY);
-		lblSearchHotel.setBounds(56, 164, 393, 36);
+		lblSearchHotel.setBounds(56, 164, 429, 36);
 		panel.add(lblSearchHotel);
 
 		bmenu_search_hotel = new JButton("");
@@ -60,7 +56,7 @@ public class Menu extends JPanel
 		bmenu_search_hotel.setForeground(null);
 		bmenu_search_hotel.setBackground(null);
 		bmenu_search_hotel.setFont(new Font("Bahnschrift", Font.PLAIN, 15));
-		bmenu_search_hotel.setBounds(471, 164, 54, 54);
+		bmenu_search_hotel.setBounds(485, 158, 54, 54);
 		bmenu_search_hotel.setOpaque(false);
 		bmenu_search_hotel.setContentAreaFilled(false);
 		panel.add(bmenu_search_hotel);
@@ -85,24 +81,24 @@ public class Menu extends JPanel
 		bmenu_check_reservation.setContentAreaFilled(false);
 		bmenu_check_reservation.setOpaque(false);
 		bmenu_check_reservation.setBackground((Color) null);
-		bmenu_check_reservation.setBounds(471, 241, 54, 54);
+		bmenu_check_reservation.setBounds(485, 238, 54, 54);
 		panel.add(bmenu_check_reservation);
 		
-//		JLabel lblbookHistory = new JLabel("Book History");
-//		lblbookHistory.setForeground(Color.BLACK);
-//		lblbookHistory.setFont(new Font("Bahnschrift", Font.PLAIN, 26));
-//		lblbookHistory.setBounds(58, 310, 343, 51);
-//		panel.add(lblbookHistory);
-//		
-//		bbook_history = new JButton("");
-//		bbook_history.setIcon(new ImageIcon(Menu.class.getResource("/images/ok.png")));
-//		bbook_history.setOpaque(false);
-//		bbook_history.setForeground((Color) null);
-//		bbook_history.setFont(new Font("Bahnschrift", Font.PLAIN, 15));
-//		bbook_history.setContentAreaFilled(false);
-//		bbook_history.setBackground((Color) null);
-//		bbook_history.setBounds(471, 320, 54, 54);
-//		panel.add(bbook_history);
+		JLabel lblbookHistory = new JLabel("Book History");
+		lblbookHistory.setForeground(Color.BLACK);
+		lblbookHistory.setFont(new Font("Bahnschrift", Font.PLAIN, 26));
+		lblbookHistory.setBounds(58, 310, 343, 51);
+		panel.add(lblbookHistory);
+		
+		bbook_history = new JButton("");
+		bbook_history.setIcon(new ImageIcon(Menu.class.getResource("/images/ok.png")));
+		bbook_history.setOpaque(false);
+		bbook_history.setForeground((Color) null);
+		bbook_history.setFont(new Font("Bahnschrift", Font.PLAIN, 15));
+		bbook_history.setContentAreaFilled(false);
+		bbook_history.setBackground((Color) null);
+		bbook_history.setBounds(485, 318, 54, 54);
+		panel.add(bbook_history);
 		
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setBounds(886, 0, 98, 32);

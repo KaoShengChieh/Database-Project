@@ -1,0 +1,13 @@
+CREATE TABLE `OrderHistory` (
+  `Order_ID` TEXT PRIMARY KEY,
+  `Member_ID` int(11) DEFAULT NULL,
+  `Hotel_ID` int(11) DEFAULT NULL,
+  `Single` int(11) DEFAULT NULL,
+  `Double` int(11) DEFAULT NULL,
+  `Quad` int(11) DEFAULT NULL,
+  `CheckIn` datetime DEFAULT NULL,
+  `CheckOut` datetime DEFAULT NULL,
+  `Price` int(11) DEFAULT NULL,
+  `CS_ID` int(11) DEFAULT NULL,
+  CONSTRAINT `Member_ID_fk3` FOREIGN KEY (`Member_ID`) REFERENCES `member` (`Member_ID`)
+)

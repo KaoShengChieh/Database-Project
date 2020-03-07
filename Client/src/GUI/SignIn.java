@@ -67,8 +67,6 @@ public class SignIn extends JPanel
 		lblHotel.setBounds(58, 15, 412, 139);
 		panel.add(lblHotel);
 		
-
-
 		bsignin_x = new JLabel("");
 		bsignin_x.setHorizontalAlignment(SwingConstants.CENTER);
 		bsignin_x.setIcon(new ImageIcon(SignIn.class.getResource("/images/logout.jpg")));

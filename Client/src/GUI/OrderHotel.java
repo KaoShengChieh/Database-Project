@@ -3,17 +3,14 @@ import java.awt.Font;
 import java.awt.SystemColor;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.JSpinner;
 import javax.swing.border.EmptyBorder;
-import java.text.SimpleDateFormat;
 
 public class OrderHotel extends JPanel
 {
@@ -23,22 +20,14 @@ public class OrderHotel extends JPanel
 	JButton borderhotel_ok;
 	JLabel lblLastPage;
 	JLabel lblMenu;
-	JComboBox<Integer> bh_hotelid;
+	JLabel lblHotelID;
+	JLabel lblAddress;
 	JTextField txtCheckin;
 	JTextField txtCheckout;
 	JSpinner txt_singleroom;
 	JSpinner txt_doubleroom;
 	JSpinner txt_quadroom;
 
-	public void showDate(JTextField dateField) {
-		java.util.Date d = new java.util.Date();
-		SimpleDateFormat f = new SimpleDateFormat("yyyyMMdd");
-		dateField.setText(f.format(d));
-	}
-
-	/**
-	 * Create the panel.
-	 */
 	public OrderHotel() {
 		setBackground(Color.WHITE);
 		setLayout(null);
@@ -59,18 +48,14 @@ public class OrderHotel extends JPanel
 		borderhotel_x.setBounds(935, 0, 49, 32);
 		borderhotel_x.setForeground(new Color(51, 63, 125));
 		contentPane.add(borderhotel_x);
-		/**
-		 * 12/14 add last page
-		 */
+
 		lblLastPage = new JLabel("");
 		lblLastPage.setIcon(new ImageIcon(OrderHotel.class.getResource("/images/back.png")));
 		lblLastPage.setHorizontalAlignment(SwingConstants.CENTER);
 		lblLastPage.setFont(new Font("Bahnschrift", Font.PLAIN, 20));
 		lblLastPage.setBounds(850, -2, 49, 32);
 		contentPane.add(lblLastPage);
-		/**
-		 * 12/14 add menu
-		 */
+
 		lblMenu = new JLabel("");
 		lblMenu.setIcon(new ImageIcon(OrderHotel.class.getResource("/images/menu.png")));
 		lblMenu.setHorizontalAlignment(SwingConstants.CENTER);
@@ -89,22 +74,29 @@ public class OrderHotel extends JPanel
 		lblNewLabel.setBounds(32, 0, 218, 603);
 		contentPane.add(lblNewLabel);
 
-		JLabel lblHotelId = new JLabel("Hotel ID:");
-		lblHotelId.setFont(new Font("Bahnschrift", Font.PLAIN, 20));
-		lblHotelId.setBackground(Color.GRAY);
-		lblHotelId.setBounds(216, 195, 114, 23);
-		contentPane.add(lblHotelId);
-
-		Integer[] content = new Integer[1500];
-		for (int i = 0; i < 1500; i++) {
-			content[i] = i;
-		}
-
-		bh_hotelid = new JComboBox<>(content);
-		bh_hotelid.setFont(new Font("Bahnschrift", Font.PLAIN, 20));
-		bh_hotelid.setFont(new Font("Bahnschrift", Font.PLAIN, 20));
-		bh_hotelid.setBounds(314, 190, 106, 32);
-		contentPane.add(bh_hotelid);
+		JLabel lbltext1 = new JLabel("Hotel ID:");
+		lbltext1.setFont(new Font("Bahnschrift", Font.PLAIN, 20));
+		lbltext1.setBackground(Color.GRAY);
+		lbltext1.setBounds(216, 201, 99, 23);
+		contentPane.add(lbltext1);
+		
+		lblHotelID = new JLabel("");
+		lblHotelID.setFont(new Font("Bahnschrift", Font.PLAIN, 20));
+		lblHotelID.setBackground(Color.GRAY);
+		lblHotelID.setBounds(315, 201, 74, 23);
+		contentPane.add(lblHotelID);
+		
+		JLabel lbltext2 = new JLabel("Address:");
+		lbltext2.setFont(new Font("Bahnschrift", Font.PLAIN, 20));
+		lbltext2.setBackground(Color.GRAY);
+		lbltext2.setBounds(415, 201, 99, 23);
+		contentPane.add(lbltext2);
+		
+		lblAddress = new JLabel("");
+		lblAddress.setFont(new Font("Bahnschrift", Font.PLAIN, 20));
+		lblAddress.setBackground(Color.GRAY);
+		lblAddress.setBounds(515, 201, 340, 23);
+		contentPane.add(lblAddress);
 
 		JLabel lblDate = new JLabel("Date from:");
 		lblDate.setFont(new Font("Bahnschrift", Font.PLAIN, 20));
@@ -123,7 +115,6 @@ public class OrderHotel extends JPanel
 		txtCheckin.setBounds(345, 266, 218, 48);
 		txtCheckin.setColumns(10);
 		contentPane.add(txtCheckin);
-		showDate(txtCheckin);
 
 		JLabel lblTo = new JLabel("to");
 		lblTo.setFont(new Font("Bahnschrift", Font.PLAIN, 20));
@@ -142,7 +133,6 @@ public class OrderHotel extends JPanel
 			}
 		});
 		contentPane.add(txtCheckout);
-		showDate(txtCheckout);
 
 		JLabel lblNumberOfPeople = new JLabel("Number of Rooms");
 		lblNumberOfPeople.setFont(new Font("Bahnschrift", Font.PLAIN, 20));

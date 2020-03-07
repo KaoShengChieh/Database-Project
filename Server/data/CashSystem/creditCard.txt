@@ -1,0 +1,9 @@
+CREATE TABLE `CreditCard` (
+  `CardNumber` varchar(16) PRIMARY KEY,
+  `ExpirationDate` varchar(5) DEFAULT NULL,
+  `SecurityCode` varchar(3) DEFAULT NULL,
+  `CS_ID` int(11) DEFAULT NULL,
+  `NP_ID` int(11) DEFAULT NULL,
+  CONSTRAINT `CS_ID_fk2` FOREIGN KEY (`CS_ID`) REFERENCES `cashsystem` (`CS_ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `NP_ID_fk1` FOREIGN KEY (`NP_ID`) REFERENCES `accountnatural` (`NP_ID`)
+)

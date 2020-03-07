@@ -1,15 +1,11 @@
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.SystemColor;
-
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTable;
-import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.SwingConstants;
 
@@ -19,7 +15,6 @@ public class ShoppingCart extends JPanel {
 	JLabel cr_x;
 	JTable table;
 	JLabel taipei_101;
-	JLabel bank;
 	JLabel lblBookID;
 	JLabel lblHotelID;
 	JLabel lblDateFrom;
@@ -30,15 +25,7 @@ public class ShoppingCart extends JPanel {
 	JLabel lblLastPage;
 	JLabel lblMenu;
 	JButton btnPay;
-	JComboBox<String> bankSelection;
-	JTextField creditCardNum1;
-	JTextField creditCardNum2;
-	JTextField creditCardNum3;
-	JTextField creditCardNum4;
 	JLabel lblHotelAddress;
-	private JLabel dashline1;
-	private JLabel dashline2;
-	private JLabel dashline3;
 
 	public ShoppingCart() {
 		setBackground(Color.WHITE);
@@ -136,17 +123,6 @@ public class ShoppingCart extends JPanel {
 		lblTitle.setBounds(206, 15, 768, 139);
 		contentPane.add(lblTitle);
 
-		bank = new JLabel("Paying Bank :");
-		bank.setFont(new Font("Arial", Font.BOLD, 25));
-		bank.setBounds(211, 442, 196, 32);
-		bank.setForeground(new Color(51, 63, 125));
-		contentPane.add(bank);
-
-		bankSelection = new JComboBox<>(new String[] { "臺灣銀行", "合作金庫", "花旗銀行", "滙豐銀行" });
-		bankSelection.setFont(new Font("Bahnschrift", Font.PLAIN, 20));
-		bankSelection.setBounds(390, 442, 286, 32);
-		contentPane.add(bankSelection);
-
 		btnPay = new JButton("Pay for reservation");
 		btnPay.setForeground(SystemColor.inactiveCaptionBorder);
 		btnPay.setFont(new Font("Bahnschrift", Font.PLAIN, 20));
@@ -163,54 +139,5 @@ public class ShoppingCart extends JPanel {
 		taipei_101.setIcon(new ImageIcon(SearchHotel.class.getResource("/images/101Half.jpg")));
 		taipei_101.setBounds(32, 0, 161, 603);
 		contentPane.add(taipei_101);
-		
-		dashline1 = new JLabel("-");
-		dashline1.setFont(new Font("Bahnschrift", Font.PLAIN, 20));
-		dashline1.setHorizontalAlignment(SwingConstants.CENTER);
-		dashline1.setBounds(254, 546, 47, 15);
-		contentPane.add(dashline1);
-		
-		dashline2 = new JLabel("-");
-		dashline2.setFont(new Font("Bahnschrift", Font.PLAIN, 20));
-		dashline2.setHorizontalAlignment(SwingConstants.CENTER);
-		dashline2.setBounds(338, 546, 47, 15);
-		contentPane.add(dashline2);
-		
-		dashline3 = new JLabel("-");
-		dashline3.setFont(new Font("Bahnschrift", Font.PLAIN, 20));
-		dashline3.setHorizontalAlignment(SwingConstants.CENTER);
-		dashline3.setBounds(416, 546, 47, 15);
-		contentPane.add(dashline3);
-		
-		creditCardNum1 = new JTextField();
-		creditCardNum1.setFont(new Font("Bahnschrift", Font.PLAIN, 20));
-		creditCardNum1.setBounds(216, 537, 49, 32);
-		contentPane.add(creditCardNum1);
-		creditCardNum1.setColumns(10);
-		
-		creditCardNum2 = new JTextField();
-		creditCardNum2.setFont(new Font("Bahnschrift", Font.PLAIN, 20));
-		creditCardNum2.setBounds(296, 538, 49, 32);
-		contentPane.add(creditCardNum2);
-		creditCardNum2.setColumns(10);
-		
-		creditCardNum3 = new JTextField();
-		creditCardNum3.setFont(new Font("Bahnschrift", Font.PLAIN, 20));
-		creditCardNum3.setBounds(376, 538, 49, 32);
-		contentPane.add(creditCardNum3);
-		creditCardNum3.setColumns(10);
-		
-		creditCardNum4 = new JTextField();
-		creditCardNum4.setFont(new Font("Bahnschrift", Font.PLAIN, 20));
-		creditCardNum4.setBounds(456, 538, 49, 32);
-		contentPane.add(creditCardNum4);
-		creditCardNum4.setColumns(10);
-		
-		JLabel lblCoorisbondingCreditCard = new JLabel("Corresponding credit card number : ");
-		lblCoorisbondingCreditCard.setFont(new Font("Bahnschrift", Font.PLAIN, 20));
-		lblCoorisbondingCreditCard.setBounds(216, 499, 337, 26);
-		contentPane.add(lblCoorisbondingCreditCard);
-		
-
 	}
 }

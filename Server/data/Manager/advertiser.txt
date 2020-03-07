@@ -1,0 +1,4 @@
+CREATE TABLE `Advertiser` (
+  `Advertiser_ID` INTEGER PRIMARY KEY,
+  `CompanyName` varchar(45) DEFAULT NULL
+)

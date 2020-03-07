@@ -23,8 +23,8 @@ import java.util.Calendar;
 @SuppressWarnings({"unchecked", "rawtypes"})
 public class DatePopup extends JDialog implements java.awt.event.ActionListener
 {
-	private static final long serialVersionUID = 1L;
-	
+    private static final long serialVersionUID = 1L;
+    
     private JPanel mPanel1 = new JPanel();
     private JPanel mPanel2 = new JPanel();
     private JPanel mPanel3 = new JPanel();
@@ -49,6 +49,7 @@ public class DatePopup extends JDialog implements java.awt.event.ActionListener
             e.printStackTrace();
         }
     }
+
 
     private void DatePopupInit() {
     	// Set up Main 

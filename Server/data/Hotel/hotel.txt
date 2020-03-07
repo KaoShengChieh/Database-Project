@@ -1,0 +1,6 @@
+CREATE TABLE `Hotel` (
+  `Hotel_ID` INTEGER PRIMARY KEY,
+  `Star` varchar(45) DEFAULT NULL,
+  `City` varchar(45) DEFAULT NULL,
+  `Address` varchar(45) DEFAULT NULL
+)
